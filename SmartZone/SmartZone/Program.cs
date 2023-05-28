@@ -11,6 +11,9 @@ builder.Services.AddDbContext<MyDbContext>(options => options.UseSqlServer(
     builder.Configuration.GetConnectionString("DefaultConnection")
     ));
 
+// Them swagger 
+builder.Services.AddSwaggerGen();
+
 var app = builder.Build();
 
 // Cap nhat tu dong database
@@ -29,6 +32,12 @@ if (!app.Environment.IsDevelopment())
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
+
+// Su dung Swagger
+app.UseSwaggerUI(c =>
+{
+
+});
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
