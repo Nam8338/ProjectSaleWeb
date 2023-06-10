@@ -1,0 +1,79 @@
+﻿@model IEnumerable<SmartZone.Models.Account>
+
+@{
+    ViewData["Title"] = "Quản lý tài khoản";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="card" style="border-radius: 1rem;margin-top:10%">
+    <div class="card-body">
+        <div class="row m-b-30" style="margin-bottom:15px;">
+            <div class="col-lg-8">
+            </div>
+            <div class="col-lg-4 text-right">
+                <a asp-area="Admin" asp-controller="AdminAccounts" asp-action="Create" class="btn btn-primary">
+                    <i class="fas fa-plus" style="margin-right: 10px;"></i>
+                    <span>Thêm người dùng</span>
+                </a>
+            </div>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table table-hover e-commerce-table">
+                <thead>
+                    <tr>
+                        <th class="align-middle text-center">ID</th>
+                        <th class="align-middle text-center">Họ và Tên</th>
+                        <th class="align-middle text-center">Tên Tài Khoản</th>
+                        <th class="align-middle text-center">Số Điện Thoại</th>
+                        <th class="align-middle text-center">Quyền</th>
+                        <th class="align-middle text-center">Is Actived</th>
+                        <th class="align-middle text-center"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model != null)
+                    {
+                        foreach (var item in Model)
+                        {
+                            <tr>
+                                <td class="align-middle text-center">
+                                    @item.UserId
+                                </td>
+                                <td class="align-middle text-center">
+                                    <h6 class="m-b-0 m-l-10">@item.FullName</h6>
+                                </td>
+                                <td class="align-middle text-center">@item.Username</td>
+                                <td class="align-middle text-center">@item.Phone</td>
+                                <td class="align-middle text-center"> @item.Role.RoleName</td>
+                                <td class="align-middle text-center">
+                                    @if (item.IsActived)
+                                    {
+                                        <span class="badge badge-lg badge-success">Actived</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge badge-lg badge-secondary">Disable</span>
+                                    }
+                                <td class="align-middle text-center">
+                                    <a asp-area="Admin" asp-controller="AdminAccounts" asp-action="Details"
+                                       asp-route-id="@item.UserId" class="btn btn-outline-info btn-block btn-xs">
+                                        <i class="fas fa-info-circle" style="margin-right:10px;"></i>Xem
+                                    </a>
+                                    <a asp-area="Admin" asp-controller="AdminAccounts" asp-action="Edit"
+                                       asp-route-id="@item.UserId" class="btn btn-outline-warning btn-xs btn-block">
+                                        <i class="fas fa-edit" style="margin-right:10px;"></i>Sửa
+                                    </a>
+                                    <a asp-area="Admin" asp-controller="AdminAccounts" asp-action="Delete"
+                                       asp-route-id="@item.UserId" class="btn btn-outline-danger btn-block btn-xs">
+                                        <i class="fas fa-trash" style="margin-right:10px;"></i>Xóa
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

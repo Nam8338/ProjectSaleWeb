@@ -1,0 +1,73 @@
+﻿@model SmartZone.ViewModel.LoginViewModel
+@{
+    ViewData["Title"] = "Đăng nhập Admin";
+    Layout = "~/Views/Layout/_AuthLayout.cshtml";
+}
+
+<!-- login page start -->
+<section id="auth-login" class="row flexbox-container">
+    <div class="col-xl-8 col-11">
+        <div class="card bg-authentication mb-0">
+            <div class="row m-0">
+                <!-- left section-login -->
+                <div class="col-md-6 col-12 px-0">
+                    <div class="card disable-rounded-right mb-0 p-2 h-100 d-flex justify-content-center">
+                        <div class="card-header pb-1">
+                            <div class="card-title">
+                                <h4 class="text-center mb-2">Welcome Back</h4>
+                            </div>
+                        </div>
+                        <div class="card-content">
+                            <div class="card-body">
+                                <div class="d-flex flex-md-row flex-column justify-content-around">
+                                </div>
+                                <div class="divider">
+                                </div>
+                                <form asp-area="Admin" asp-controller="Login" asp-action="AdLogin" method="post">
+                                    <div class="form-group mb-50">
+                                        <label class="text-bold-600" for="exampleInputEmail1">Email address</label>
+                                        <input type="text" asp-for="UserName" class="form-control" id="exampleInputEmail1" placeholder="Email address">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="text-bold-600" for="exampleInputPassword1">Password</label>
+                                        <input type="password" asp-for="Password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                                    </div>
+                                    <div class="form-group d-flex flex-md-row flex-column justify-content-between align-items-center">
+                                        <div class="text-left">
+                                            <div class="checkbox checkbox-sm">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary glow w-100 position-relative">Login<i id="icon-arrow" class="bx bx-right-arrow-alt"></i></button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- right section image -->
+                <div class="col-md-6 d-md-block d-none text-center align-self-center p-3">
+                    <div class="card-content">
+                        <img class="img-fluid" src="~/app-assets/images/pages/login.png" alt="branding logo">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- login page ends -->
+@*đây là trang đăng nhập cho phần admin của trang web.
+
+Đầu tiên, chúng ta định nghĩa mô hình ViewModel được sử dụng cho trang đăng nhập là LoginViewModel từ namespace SmartZone.ViewModel. Điều này cho phép chúng ta sử dụng các thuộc tính của LoginViewModel trong file .cshtml này.
+
+Tiếp theo, chúng ta đặt tiêu đề của trang là "Đăng nhập Admin" thông qua ViewData["Title"] và cung cấp layout cho trang thông qua Layout là đường dẫn tới file _AuthLayout.cshtml.
+
+Trang đăng nhập được tạo bằng cách sử dụng các phần tử HTML và CSS để tạo giao diện. Trong trang này, có một biểu mẫu đăng nhập được bao gồm trong thẻ <form>
+    . Biểu mẫu này sẽ gửi yêu cầu đăng nhập đến action AdLogin trong controller Login trong khu vực "Admin" khi được submit.
+
+    Biểu mẫu này chứa hai trường đầu vào: "Email address" và "Password". Các trường này được liên kết với thuộc tính UserName và Password của mô hình LoginViewModel thông qua asp-for. Khi biểu mẫu được submit, giá trị của các trường này sẽ được gửi đến action AdLogin trong controller Login để xử lý quá trình đăng nhập.
+
+    Sau khi nhập thông tin đăng nhập, người dùng có thể nhấn vào nút "Login" để gửi biểu mẫu đi. Nút này có một biểu tượng mũi tên phải và được định dạng bằng CSS.
+
+    Trên cùng một trang, có một hình ảnh được hiển thị, có đường dẫn là ~/app-assets/images/pages/login.png, để tạo thành một phần bên phải của trang đăng nhập.
+
+    Tổng thể, đoạn mã này tạo ra trang đăng nhập cho phần admin của trang web và cho phép người dùng nhập thông tin đăng nhập để tiếp tục vào phần quản trị của trang.*@

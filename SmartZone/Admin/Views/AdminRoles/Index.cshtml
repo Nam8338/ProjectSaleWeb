@@ -1,0 +1,65 @@
+﻿@model IEnumerable<SmartZone.Models.Role>
+@{
+    ViewData["Title"] = "Quản lý quyền truy cập";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+<div style="margin-top:10%">
+    <h1>Quản lý quyền truy cập</h1>
+    <a asp-area="Admin" asp-controller="AdminRoles" asp-action="Create" class="btn btn-block btn-outline-success btn-sm"><i class="fas fa-user-plus" style="margin-right:10px;"></i>Create New</a>
+    <!--Start Designed Table // Material-Kit-->
+    <div class="card" style="margin-top:50px;">
+        <div class="table-responsive">
+            <table class="table align-items-center mb-0">
+                <thead>
+                    <tr>
+                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">ID</th>
+                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                            Role Name
+                        </th>
+                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                            Descriptions
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model != null)
+                    {
+                        foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    <div class="d-flex px-2">
+                                        <div class="my-auto">
+                                            <h6 class="mb-0 text-xs">@item.RoleId</h6>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <p class="text-xs font-weight-normal mb-0">@item.RoleName</p>
+                                </td>
+                                <td>
+                                    <span class="badge badge-dot me-4">
+                                        @*<i class="bg-info"></i>*@
+                                        <span class="text-dark text-xs">@item.Descriptions</span>
+                                    </span>
+                                </td>
+
+                                <td class="align-middle">
+                                    <a asp-area="Admin" asp-controller="AdminRoles" asp-action="Details" asp-route-id="@item.RoleId" class="btn btn-outline-info btn-block btn-sm"><i class="fas fa-info-circle"></i> Xem</a>
+                                </td>
+                                <td class="align-middle">
+                                    <a asp-area="Admin" asp-controller="AdminRoles" asp-action="Edit" asp-route-id="@item.RoleId" class="btn btn-outline-warning btn-block btn-sm"><i class="fas fa-edit"></i> Sửa</a>
+                                </td>
+                                <td class="align-middle">
+                                    <a asp-area="Admin" asp-controller="AdminRoles" asp-action="Delete" asp-route-id="@item.RoleId" class="btn btn-outline-danger btn-block btn-sm" )><i class="fas fa-trash"></i> Xóa</a>
+                                </td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <!--End Designed Table-->
+</div>

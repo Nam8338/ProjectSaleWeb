@@ -1,0 +1,78 @@
+﻿@model SmartZone.Models.Brand
+
+@{
+    ViewData["Title"] = "Xóa nhãn hàng Id #" + Model.BrandId;
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+<div style="margin-top:10%; margin-left:10%;">
+    <h3>M có chắc là m muốn xóa nó không</h3>
+    <div>
+        <h4>Nhãn hàng</h4>
+        <hr />
+        <dl class="row">
+            <dt class="col-sm-2">
+                Tên nhãn hàng
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.BrandName)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Logo)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Logo)
+            </dd>
+        </dl>
+        <div class="profile-img">
+            <img src="~/images/User/@Model.Logo" alt="@Model.BrandName" />
+            @*<div class="file btn btn-lg btn-primary">
+                Change Photo
+                <input type="file" name="file" />
+            </div>*@
+        </div>
+        <div>
+
+        </div>
+
+        <form asp-action="Delete" style="margin-top: 30px;">
+            <input type="hidden" asp-for="BrandId" />
+            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModalCenter">
+                Xóa
+            </button>  |
+            <a asp-action="Index">Trở về</a>
+        </form>
+    </div>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="exampleModalCenter">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalCenterTitle">Xác nhận xóa</h5>
+                <button type="button" class="close" data-dismiss="modal">
+                    <i class="anticon anticon-close"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                Cho m nghĩ lại lần nữa đấy ???
+            </div>
+            <div class="modal-footer">
+                <form asp-action="Delete">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Để t suy nghĩ thêm</button>
+                    <input type="submit" value="Xóa" class="btn btn-danger" />
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+@section Styles {
+    <style>
+        .profile-img img {
+            /*width: 100%;
+            height: 100%;*/
+            max-height: 188px;
+            max-width: 125px;
+            border-radius: 10px;
+        }
+    </style>
+}

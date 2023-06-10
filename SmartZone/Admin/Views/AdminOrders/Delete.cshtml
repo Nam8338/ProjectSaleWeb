@@ -1,0 +1,87 @@
+﻿@model SmartZone.Models.Order
+
+@{
+    ViewData["Title"] = "Xóa vĩnh viễn đơn hàng #" + Model.OrderId;
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+<div class="container" style="margin-top:8%; margin-left:5%">
+    <h3>M chắc chứ?</h3>
+    <div>
+        <h4>Đơn hàng</h4>
+        <hr />
+        <dl class="row">
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.OrderDate)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.OrderDate)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.IsDeleted)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.IsDeleted)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.IsPaid)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.IsPaid)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Note)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Note)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.TotalMoney)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.TotalMoney)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Address)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Address)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Province)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Province)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.District)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.District)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Ward)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Ward)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Customer)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Customer.FullName)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.TransactionStatus)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.TransactionStatus.Descriptions)
+            </dd>
+        </dl>
+
+        <form asp-action="Delete">
+            <input type="hidden" asp-for="OrderId" />
+            <input type="submit" value="Xóa" class="btn btn-danger" /> |
+            <a asp-action="Index">Trở về</a>
+        </form>
+    </div>
+</div>

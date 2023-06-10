@@ -1,0 +1,203 @@
+﻿@model SmartZone.Models.Product
+
+@{
+    ViewData["Title"] = "Chỉnh sửa sản phẩm #"+Model.ProductId;
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="main-content">
+    <form asp-controller="AdminProducts" asp-action="Edit" asp-route-id="@Model.ProductId" method="post" enctype="multipart/form-data">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <input type="hidden" asp-for="ProductId" />
+        <input type="hidden" asp-for="ThumbImg" />
+        <input type="hidden" asp-for="DateCreated" />
+        <div class="page-header no-gutters has-tab">
+            <div class="d-md-flex m-b-15 align-items-center justify-content-between">
+                <div class="media align-items-center m-b-15">
+                    <div class="avatar avatar-image rounded" style="height: 165px; width: 165px">
+                        <img src="~/images/products/@Model.ThumbImg" alt="@Model.Title" id="output">
+                    </div>
+                    <div class="m-l-15">
+                        <h4 class="m-b-0">@Model.ProductName</h4>
+                        <p class="text-muted m-b-0">ID: #@Model.ProductId</p>
+                    </div>
+                </div>
+                <div class="m-b-15">
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="anticon anticon-save"></i>
+                            <span>Lưu</span>
+                        </button>
+                    </div>
+                    <div>
+                        <a asp-action="Index" type="button" class="btn btn-dark">Trở về</a>
+                    </div>
+                </div>
+            </div>
+            <ul class="nav nav-tabs">
+                <li class="nav-item">
+                    <a class="nav-link active" data-toggle="tab" href="#product-edit-basic">Thông tin cơ bản</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" href="#product-edit-option">Thông tin tùy chọn</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" href="#product-edit-description">Mô tả</a>
+                </li>
+            </ul>
+        </div>
+        <div class="tab-content m-t-15">
+            <div class="tab-pane fade show active" id="product-edit-basic">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label asp-for="ProductName" class="control-label">Tên sản phẩm</label>
+                            <input asp-for="ProductName" class="form-control" />
+                            <span asp-validation-for="ProductName" class="text-danger"></span>
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-md-4">
+                                <label asp-for="Price" class="control-label">Giá gốc</label>
+                                <input asp-for="Price" class="form-control" />
+                                <span asp-validation-for="Price" class="text-danger"></span>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label asp-for="SalesPrice" class="control-label">Giá bán</label>
+                                <input asp-for="SalesPrice" class="form-control" value="@Model.SalesPrice" disabled />
+                                <span asp-validation-for="SalesPrice" class="text-danger"></span>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label asp-for="Discount" class="control-label"></label>
+                                <input asp-for="Discount" class="form-control" />
+                                <span asp-validation-for="Discount" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-md-6">
+                                <label asp-for="CateId" class="control-label">Danh mục</label>
+                                <select asp-for="CateId" class="form-control" asp-items="ViewBag.CateId"></select>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label asp-for="BrandId" class="control-label">Thương hiệu</label>
+                                <select asp-for="BrandId" class="form-control" asp-items="ViewBag.BrandId"></select>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label asp-for="UnitInStock" class="control-label">Tồn kho</label>
+                                <input asp-for="UnitInStock" class="form-control" />
+                                <span asp-validation-for="UnitInStock" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Title" class="control-label"></label>
+                            <input asp-for="Title" class="form-control" />
+                            <span asp-validation-for="Title" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="ThumbImg" class="font-weight-semibold">Upload Ảnh</label>
+                            <input type="file" name="fThumbImg" asp-for="ThumbImg" class="form-control-file" onchange="loadFile(event)" />
+                            <span asp-validation-for="ThumbImg" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane fade" id="product-edit-option">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label asp-for="Tag" class="control-label"></label>
+                            <input asp-for="Tag" class="form-control" />
+                            <span asp-validation-for="Tag" class="text-danger"></span>
+                        </div>
+                        <div class="form-group d-flex align-items-center">
+                            @if (Model.IsActived)
+                            {
+                                <div class="switch m-r-10">
+                                    <input type="checkbox" asp-for="IsActived" checked="" />
+                                    <label for="IsActived"></label>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="switch m-r-10">
+                                    <input type="checkbox" asp-for="IsActived" />
+                                    <label for="IsActived"></label>
+                                </div>
+                            }
+                            <label>Actived</label>
+                        </div>
+                        <div class="form-group d-flex align-items-center">
+                            @if (Model.Homeflag)
+                            {
+                                <div class="switch m-r-10">
+                                    <input type="checkbox" asp-for="Homeflag" checked="" />
+                                    <label for="Homeflag"></label>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="switch m-r-10">
+                                    <input type="checkbox" asp-for="Homeflag" />
+                                    <label for="Homeflag"></label>
+                                </div>
+                            }
+                            <label>Homeflag</label>
+                        </div>
+                        <div class="form-group d-flex align-items-center">
+                            @if (Model.IsBestsellers)
+                            {
+                                <div class="switch m-r-10">
+                                    <input type="checkbox" asp-for="IsBestsellers" checked="" />
+                                    <label for="IsBestsellers"></label>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="switch m-r-10">
+                                    <input type="checkbox" asp-for="IsBestsellers" />
+                                    <label for="IsBestsellers"></label>
+                                </div>
+                            }
+                            <label>Bestsellers</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane fade" id="product-edit-description">
+                <div class="card" style="background: #F0BF87">
+                    <div class="card-body">
+                        <label asp-for="Descriptions" class="control-label" style="font-weight :800"></label>
+                        <textarea asp-for="Descriptions" class="summernnote"></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script src="~/_AdminAssets/js/pages/e-commerce-product-edit.js"></script>
+    <script src="~/_AdminAssets/vendors/select2/select2.min.js"></script>
+    <script src="~/_AdminAssets/summernote/summernote-bs4.js"></script>
+    <script>
+        jQuery(document).ready(function () {
+            $('.summernnote').summernote({
+                fontNames: ['Comic Sans MS'],
+                styleTags: ['p', 'h1', 'h2', 'h3', 'h4', 'h5'],
+                height: 350,
+                minHeight: null,
+                maxHeight: null,
+                focus: true
+            });
+        });
+    </script>
+    <script>
+        var loadFile = function (event) {
+            var image = document.getElementById("output");
+            image.src = URL.createObjectURL(event.target.files[0]);
+        };
+    </script>
+}
+@section Styles {
+    <link href="~/_AdminAssets/summernote/summernote-bs4.css" rel="stylesheet" />
+    <link href="~/_AdminAssets/summernote/summernote.css" rel="stylesheet" />
+}

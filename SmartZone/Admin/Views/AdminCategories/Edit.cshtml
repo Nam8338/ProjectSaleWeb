@@ -1,0 +1,124 @@
+﻿@model SmartZone.Models.Category
+
+@{
+    ViewData["Title"] = "Chỉnh sửa danh mục #" + Model.CateId;
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="main-content">
+    <form asp-controller="AdminCategories" asp-action="Edit" asp-route-id="@Model.CateId" method="post" enctype="multipart/form-data">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <input type="hidden" asp-for="CateId" />
+        <input type="hidden" asp-for="ThumbImg" />
+        <div class="page-header no-gutters has-tab">
+            <div class="d-md-flex m-b-15 align-items-center justify-content-between">
+                <div class="media align-items-center m-b-15">
+                    <div class="avatar avatar-image rounded" style="height: 165px; width: 165px">
+                        <img src="~/images/categories/@Model.ThumbImg" alt="@Model.Title" id="output">
+                    </div>
+                    <div class="m-l-15">
+                        <h4 class="m-b-0">@Model.CategoryName</h4>
+                        <p class="text-muted m-b-0">ID: #@Model.CateId</p>
+                    </div>
+                </div>
+                <div class="m-b-15">
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="anticon anticon-save"></i>
+                            <span>Lưu</span>
+                        </button>
+                    </div>
+                    <div>
+                        <a asp-action="Index" type="button" class="btn btn-dark">Back to List</a>
+                    </div>
+                </div>
+            </div>
+            <ul class="nav nav-tabs">
+                <li class="nav-item">
+                    <a class="nav-link active" data-toggle="tab" href="#product-edit-basic">Thông tin cơ bản</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" href="#product-edit-description">Mô tả</a>
+                </li>
+            </ul>
+        </div>
+        <div class="tab-content m-t-15">
+            <div class="tab-pane fade show active" id="product-edit-basic">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label asp-for="CategoryName" class="control-label"></label>
+                            <input asp-for="CategoryName" class="form-control" />
+                            <span asp-validation-for="CategoryName" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Title" class="control-label"></label>
+                            <input asp-for="Title" class="form-control" />
+                            <span asp-validation-for="Title" class="text-danger"></span>
+                        </div>
+                        <div class="form-group d-flex align-items-center">
+                            @if (Model.IsPublished)
+                            {
+                                <div class="switch m-r-10">
+                                    <input type="checkbox" asp-for="IsPublished" checked="" />
+                                    <label for="IsPublished"></label>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="switch m-r-10">
+                                    <input type="checkbox" asp-for="IsPublished" />
+                                    <label for="IsPublished"></label>
+                                </div>
+                            }
+                            <label>IsPubished</label>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="ThumbImg" class="font-weight-semibold">Upload Ảnh</label>
+                            <input type="file" name="fThumbImg" asp-for="ThumbImg" class="form-control-file" onchange="loadFile(event)" />
+                            <span asp-validation-for="ThumbImg" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane fade" id="product-edit-description">
+                <div class="card" style="background: #F0BF87">
+                    <div class="card-body">
+                        <label asp-for="Descriptions" class="control-label" style="font-weight :800"></label>
+                        <textarea asp-for="Descriptions" class="summernnote"></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script src="~/_AdminAssets/js/pages/e-commerce-product-edit.js"></script>
+    <script src="~/_AdminAssets/vendors/select2/select2.min.js"></script>
+    <script src="~/_AdminAssets/summernote/summernote-bs4.js"></script>
+    <script>
+        jQuery(document).ready(function () {
+            $('.summernnote').summernote({
+                fontNames: ['Comic Sans MS'],
+                styleTags: ['p', 'h1', 'h2', 'h3', 'h4', 'h5'],
+                height: 350,
+                minHeight: null,
+                maxHeight: null,
+                focus: true
+            });
+        });
+    </script>
+    <script>
+        var loadFile = function (event) {
+            var image = document.getElementById("output");
+            image.src = URL.createObjectURL(event.target.files[0]);
+        };
+    </script>
+}
+@section Styles {
+    <link href="~/_AdminAssets/summernote/summernote-bs4.css" rel="stylesheet" />
+    <link href="~/_AdminAssets/summernote/summernote.css" rel="stylesheet" />
+}
+
