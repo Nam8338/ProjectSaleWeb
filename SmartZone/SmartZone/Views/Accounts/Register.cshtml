@@ -1,0 +1,189 @@
+﻿@model SmartZone.ViewModel.RegisterViewModel
+
+@{
+    ViewData["Title"] = "Đăng Ký";
+    Layout = "~/Views/Layout/_AuthLayout.cshtml";
+}
+
+<!-- register section endss -->
+<section class="row flexbox-container">
+    <div class="col-xl-8 col-10">
+        <div class="card bg-authentication mb-0">
+            <div class="row m-0">
+                <!-- register section left -->
+                <div class="col-md-12 col-12 px-0">
+                    <div class="card disable-rounded-right mb-0 p-2 h-100 d-flex justify-content-center">
+                        <div class="card-header pb-1">
+                            <div class="card-title">
+                                <h4 class="text-center mb-2">Sign Up</h4>
+                            </div>
+                        </div>
+                        @*<div class="text-center">
+                            <p>
+                                <small> Please enter your details to sign up and be part of our great community</small>
+                            </p>
+                        </div>*@
+                        <div class="card-content">
+                            <div class="card-body">
+                                <form asp-controller="Accounts" asp-action="Register">
+                                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                    <div class="form-row">
+                                        <div class="form-group col-md-6 mb-50">
+                                            <label asp-for="Mail" class="control-label"></label>
+                                            <input asp-for="Mail" class="form-control" />
+                                            <span asp-validation-for="Mail" class="text-danger"></span>
+                                        </div>
+                                        <div class="form-group col-md-6 mb-50">
+                                            <label asp-for="Phone" class="control-label"></label>
+                                            <input asp-for="Phone" type="number" class="form-control" />
+                                            <span asp-validation-for="Phone" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group mb-50">
+                                        <label asp-for="FullName" class="control-label"></label>
+                                        <input asp-for="FullName" class="form-control" />
+                                        <span asp-validation-for="FullName" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group mb-50">
+                                        <label asp-for="Username" class="control-label"></label>
+                                        <input asp-for="Username" class="form-control" />
+                                        <span asp-validation-for="Username" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group mb-50">
+                                        <label asp-for="Password" class="control-label"></label>
+                                        <input asp-for="Password" class="form-control" />
+                                        <span asp-validation-for="Password" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group mb-2">
+                                        <label asp-for="ConfirmPassword" class="control-label"></label>
+                                        <input asp-for="ConfirmPassword" class="form-control" />
+                                        <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-group col-md-4 mb-auto">
+                                            <label asp-for="Province" class="control-label">Thành phố</label>
+                                            <div class="col-md-10">
+                                                <select class="form-control" id="Province" name="Province" onchange="changeFunction();">
+                                                    <option value="" selected></option>
+                                                </select>
+                                                <input class="billing_address_1" name="Province" type="hidden" value="">
+                                                <span asp-validation-for="Province" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-md-4 mb-auto">
+                                            <label asp-for="District" class="control-label"></label>
+                                            <div class="col-md-10">
+                                                <select class="form-control" id="District" name="District" onchange="districtChangeFunction();">
+                                                    <option value="" selected>Quận Huyện</option>
+                                                </select>
+                                                <input class="billing_address_2" name="District" type="hidden" value="">
+                                                <span asp-validation-for="District" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-md-4 mb-auto">
+                                            <label asp-for="Ward" class="control-label"></label>
+                                            <div class="col-md-10">
+                                                <select class="form-control" id="Ward" name="Ward" aria-placeholder="Quận Huyện">
+                                                    <option value="" selected>Phường xã</option>
+                                                </select>
+                                                <span asp-validation-for="Ward" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group mb-50">
+                                        <label asp-for="Address" class="control-label"></label>
+                                        <input asp-for="Address" class="form-control" />
+                                        <span asp-validation-for="Address" class="text-danger"></span>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary glow position-relative w-100">SIGN UP<i id="icon-arrow" class="bx bx-right-arrow-alt"></i></button>
+                                </form>
+                                <hr>
+                                <div class="text-center"><small class="mr-25">Already have an account?</small><a href="login.html"><small>Đăng nhập</small> </a></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- image section right -->
+                <!--<div class="col-md-3 d-md-block d-none text-center align-self-center p-3">
+                    <img class="img-fluid" src="~/app-assets/images/pages/register.png" alt="branding logo">
+                </div>-->
+            </div>
+        </div>
+    </div>
+</section>
+<!-- register section endss -->
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>
+        $(document).ready(function () {
+            var province = document.getElementById("Province");
+            window.onload = function () {
+                $.ajax({
+                    url: "https://dev-online-gateway.ghn.vn/shiip/public-api/master-data/province",
+                    headers: {
+                        "token": "ec9c3a6c-46a9-11ec-ac64-422c37c6de1b",
+                    },
+                    type: "GET",
+                    dataType: 'json',
+                    success: function (response) {
+                        console.log('success: ' + response.code);
+                        var str = "<option selected>Tỉnh thành</option> ";
+                        for (var i = 0; i < response.data.length; i++) {
+                            console.log(response.data[i].ProvinceName);
+                            str = str + "<option class='provinceId' data-province='" + response.data[i].ProvinceID + "'>" + response.data[i].ProvinceName + "</option>";
+                        }
+                        province.innerHTML = str;
+                    }
+                });
+            };
+        })
+        function changeFunction() {
+            var selectBox = document.getElementById("Province");
+            var selectedValue = selectBox.options[selectBox.selectedIndex].getAttribute('data-province');
+            var district = document.getElementById("District");
+            $.ajax({
+                url: "https://dev-online-gateway.ghn.vn/shiip/public-api/master-data/district",
+                headers: {
+                    'token': 'ec9c3a6c-46a9-11ec-ac64-422c37c6de1b',
+                    'Content-type': 'application/json'
+                },
+                method: 'GET',
+                dataType: 'json',
+                success: function (response) {
+                    var str = "<option selected>Quận Huyện</option>";
+                    for (var i = 0; i < response.data.length; i++) {
+                        if (response.data[i].ProvinceID == selectedValue) {
+                            str = str + "<option class='districtId' data-district='" + response.data[i].DistrictID + "'>" + response.data[i].DistrictName + "</option>";
+                        }
+                    }
+                    district.innerHTML = str;
+                }
+            });
+        };
+        function districtChangeFunction() {
+            var selectBox = document.getElementById("District");
+            var selectedValue = selectBox.options[selectBox.selectedIndex].getAttribute('data-district');
+            var guild = document.getElementById("Ward");
+            $.ajax({
+                url: "https://dev-online-gateway.ghn.vn/shiip/public-api/master-data/ward?district_id=" + selectedValue,
+                headers: {
+                    'token': 'ec9c3a6c-46a9-11ec-ac64-422c37c6de1b',
+                    'Content-type': 'application/json'
+                },
+                method: 'GET',
+                dataType: 'json',
+                success: function (response) {
+                    var str = "<option selected>Phường xã</option>";
+                    console.log(response.data.length);
+                    for (var i = 0; i < response.data.length; i++) {
+                        console.log(response.data[i].WardName);
+                        str = str + "<option class='guildId' data-guild='" + response.data[i].WardCode + "'>" + response.data[i].WardName + "</option>";
+                    }
+                    console.log(str);
+                    guild.innerHTML = str;
+                }
+            });
+        }
+    </script>
+}

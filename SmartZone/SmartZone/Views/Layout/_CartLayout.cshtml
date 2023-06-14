@@ -1,0 +1,76 @@
+﻿<!DOCTYPE html>
+<html lang="zxx">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>@ViewBag.Title</title>
+    <meta name="robots" content="noindex, follow" />
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Favicon -->
+    <link rel="shortcut icon" type="image/x-icon" href="~/CartAssets/images/favicon.ico" />
+
+    <!-- CSS
+    ============================================ -->
+    <!-- Vendor CSS (Contain Bootstrap, Icon Fonts) -->
+    <link rel="stylesheet" href="~/CartAssets/css/vendor/font-awesome.min.css" />
+    <link rel="stylesheet" href="~/CartAssets/css/vendor/Pe-icon-7-stroke.css" />
+
+    <!-- Plugin CSS (Global Plugins Files) -->
+    <link rel="stylesheet" href="~/CartAssets/css/plugins/animate.min.css">
+    <link rel="stylesheet" href="~/CartAssets/css/plugins/jquery-ui.min.css">
+    <link rel="stylesheet" href="~/CartAssets/css/plugins/swiper-bundle.min.css">
+    <link rel="stylesheet" href="~/CartAssets/css/plugins/nice-select.css">
+    <link rel="stylesheet" href="~/CartAssets/css/plugins/magnific-popup.min.css" />
+
+    <!-- Style CSS -->
+    <link rel="stylesheet" href="~/CartAssets/css/style.css">
+
+    <!-- Font Awesome Icon -->
+    <script src="https://kit.fontawesome.com/03e6f106ae.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="~/_UserAssets/css/font-awesome.min.css">
+
+</head>
+
+<body>
+
+    <div class="main-wrapper">
+
+        <!-- Begin Main Header Area -->
+        <!-- Main Header Area End Here -->
+        <!-- Begin Main Content Area -->
+        <main class="main-content">
+            @RenderBody()
+        </main>
+        <!-- Main Content Area End Here -->
+    </div>
+
+    <!-- Global Vendor, plugins JS -->
+    <!-- JS Files
+    ============================================ -->
+    <!-- Global Vendor, plugins JS -->
+    <!-- Vendor JS -->
+    <script src="~/CartAssets/js/vendor/bootstrap.bundle.min.js"></script>
+    <script src="~/CartAssets/js/vendor/jquery-3.5.1.min.js"></script>
+    <script src="~/CartAssets/js/vendor/jquery-migrate-3.3.0.min.js"></script>
+    <script src="~/CartAssets/js/vendor/modernizr-3.11.2.min.js"></script>
+    <script src="~/CartAssets/js/vendor/jquery.waypoints.js"></script>
+
+    <!--Plugins JS-->
+    <script src="~/CartAssets/js/plugins/wow.min.js"></script>
+    <script src="~/CartAssets/js/plugins/jquery-ui.min.js"></script>
+    <script src="~/CartAssets/js/plugins/swiper-bundle.min.js"></script>
+    <script src="~/CartAssets/js/plugins/jquery.nice-select.js"></script>
+    <script src="~/CartAssets/js/plugins/parallax.min.js"></script>
+    <script src="~/CartAssets/js/plugins/jquery.magnific-popup.min.js"></script>
+
+    <!--Main JS (Common Activation Codes)-->
+    <script src="~/CartAssets/js/main.js"></script>
+    @await Component.InvokeAsync("Notyf")
+    @await RenderSectionAsync("Scripts", required: false)
+    @await RenderSectionAsync("Styles", required: false)
+</body>
+
+</html>

@@ -1,0 +1,125 @@
+﻿@model SmartZone.ViewModel.LoginViewModel
+
+@{
+    ViewData["Title"] = "Đăng nhập";
+    Layout = "~/Views/Layout/_AuthLayout.cshtml";
+}
+
+<!-- login page start -->
+<section id="auth-login" class="row flexbox-container">
+    <div class="col-xl-8 col-11">
+        <div class="card bg-authentication mb-0">
+            <div class="row m-0">
+                <!-- left section-login -->
+                <div class="col-md-6 col-12 px-0">
+                    <div class="card disable-rounded-right mb-0 p-2 h-100 d-flex justify-content-center">
+                        <div class="card-header pb-1">
+                            <div class="card-title">
+                                <h4 class="text-center mb-2">Welcome Back</h4>
+                            </div>
+                        </div>
+                        <div class="card-content">
+                            <div class="card-body">
+                                <div class="d-flex flex-md-row flex-column justify-content-around">
+                                    <a href="/dang-nhap-tu-google" class="btn btn-social btn-google btn-block font-small-3 mr-md-1 mb-md-0 mb-1">
+                                        <i class="bx bxl-google font-medium-3"></i><span class="pl-50 d-block text-center">Google</span>
+                                    </a>
+                                    <a href="#" class="btn btn-social btn-block mt-0 btn-facebook font-small-3">
+                                        <i class="bx bxl-facebook-square font-medium-3"></i><span class="pl-50 d-block text-center">Facebook</span>
+                                    </a>
+                                </div>
+                                <div class="divider">
+                                    <div class="divider-text text-uppercase text-muted">
+                                        <small>
+                                            or login with
+                                            Account
+                                        </small>
+                                    </div>
+                                </div>
+                                <form asp-controller="Accounts" asp-action="Login">
+                                    <div class="form-group mb-50">
+                                        <label asp-for="UserName" class="control-label"></label>
+                                        <input asp-for="UserName" class="form-control" placeholder="Tên tài khoản" />
+                                        <span asp-validation-for="UserName" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label asp-for="Password" class="control-label"></label>
+                                        <input asp-for="Password" class="form-control" placeholder="Mật khẩu" />
+                                        <span asp-validation-for="Password" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group d-flex flex-md-row flex-column justify-content-between align-items-center">
+                                        <div class="text-left">
+                                        </div>
+                                        <div class="text-right"><a href="#" class="card-link" data-toggle="modal" data-target="#exampleModalCenter"><small>Quên mật khẩu?</small></a></div>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary glow w-100 position-relative">Đăng nhập<i id="icon-arrow" class="bx bx-right-arrow-alt"></i></button>
+                                </form>
+                                <hr>
+                                <div class="text-center"><small class="mr-25">Don't have an account?</small><a href="Register.html"><small>Đăng ký</small></a></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- right section image -->
+                <div class="col-md-6 d-md-block d-none text-center align-self-center p-3">
+                    <div class="card-content">
+                        <img class="img-fluid" src="~/app-assets/images/pages/login.png" alt="branding logo">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- login page ends -->
+<!-- Vertically Centered modal Modal -->
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-centered modal-dialog-scrollable" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalCenterTitle">Vui lòng liên hệ Admin Web qua thông tin bên dưới</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i class="bx bx-x"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p class="justify-content-center align-content-center text-center">
+                    <h6 class="justify-content-center align-content-center text-center">Email : <a href="#">Laihuyha@gmail.com</a></h6>
+                    <br />
+                    <h6 class="justify-content-center align-content-center text-center">
+                        <div class="fonticon-wrap">
+                            <i class="bx bx-phone-call" style="font-size:18px;"></i>
+                            :<a href="#"> 0968454617</a>
+                        </div>
+                    </h6>
+                    <hr />
+                    <h5 class="justify-content-center align-content-center text-center">Hoặc</h5>
+                    <br />
+                    <div style="text-align:center">
+                        <a href="https://fb.com/huyha111200"><i class="bx bxl-facebook-square"></i></a>
+                    </div>
+                </p>
+            </div>
+            <div class="modal-footer">
+                @*<button type="button" class="btn btn-light-secondary" data-dismiss="modal">
+                        <i class="bx bx-x d-block d-sm-none"></i>
+                        <span class="d-none d-sm-block">Close</span>
+                    </button>*@
+                <button type="button" class="btn btn-primary ml-1" data-dismiss="modal">
+                    <i class="bx bx-check d-block d-sm-none"></i>
+                    <span class="d-none d-sm-block">OK</span>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End Vertically Centered modal Modal -->
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+@section Styles {
+    <style>
+        .modal-body .bx {
+            font-size: 50px;
+        }
+    </style>
+}

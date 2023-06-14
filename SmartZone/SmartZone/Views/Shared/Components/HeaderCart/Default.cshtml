@@ -1,0 +1,56 @@
+﻿@model List<SmartZone.ViewModel.CartItem>
+@if (Model != null && Model.Count() > 0)
+{
+    <div class="cart-dropdown">
+        <div class="cart-list">
+            @foreach (var item in Model)
+            {
+                string url = $"{item.product.Alias}-{item.product.ProductId}.html";
+                <div class="product-widget" id="miniCart">
+                    <div class="product-img" style="height:60px; width:60px;">
+                        <img src="~/images/products/@item.product.ThumbImg" alt="@item.product.Title">
+                    </div>
+                    <div class="product-body">
+                        <h3 class="product-name"><a href="@url">@item.product.ProductName</a></h3>
+                        <h4 class="product-price"><span class="qty"><span>x</span>@item.Qty.Value</span>@item.product.SalesPrice.Value.ToString("#,##0") VNĐ</h4>
+                    </div>
+                    <button class="delete" data-mahh="@item.product.ProductId" data-dongia="@item.product.SalesPrice"><i class="fa fa-close"></i></button>
+                </div>
+            }
+        </div>
+        <div class="cart-summary">
+            <small>@Model.Sum(x => x.Qty).Value.ToString() Item(s) selected</small>
+            <h5>Tổng tiền: @Model.Sum(x => x.TotalMoney).Value.ToString("#,##0") VNĐ</h5>
+        </div>
+        <div class="cart-btns">
+            <a href="CartItem.html">Xem giỏ hàng</a>
+            @if (User.Identity.IsAuthenticated)
+            {
+                <a href="/checkout.html">Thanh toán <i class="fa fa-arrow-circle-right"></i></a>
+            }
+            else
+            {
+                <a href="/login.html?returnUrl=/checkout.html">Thanh toán <i class="fa fa-arrow-circle-right"></i></a>
+            }
+        </div>
+    </div>
+}
+else
+{
+
+
+    <div class="cart-dropdown">
+        <p style="text-align:center;">Rỗng</p>
+        <div class="cart-btns">
+            <a href="CartItem.html">Xem giỏ hàng</a>
+            @if (User.Identity.IsAuthenticated)
+            {
+                <a href="/checkout.html">Thanh toán <i class="fa fa-arrow-circle-right"></i></a>
+            }
+            else
+            {
+                <a href="/login.html?returnUrl=/checkout.html">Thanh toán <i class="fa fa-arrow-circle-right"></i></a>
+            }
+        </div>
+    </div>
+}

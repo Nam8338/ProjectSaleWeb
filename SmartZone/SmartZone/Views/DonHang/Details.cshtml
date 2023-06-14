@@ -1,0 +1,86 @@
+﻿@model SmartZone.ViewModel.XemDonHang
+@{
+    ViewData["Title"] = "Chi tiết đơn hàng #" + Model.DonHang.OrderId;
+    Layout = "~/Views/Layout/_InvoiceLayout.cshtml";
+}
+
+<div class="main-content" style="margin-left: -20%">
+    <div class="container">
+        <div class="card">
+            <div class="card-body">
+                <div id="invoice" class="p-h-30">
+                    <div class="row m-t-20 lh-2">
+                        <div class="col-sm-3">
+                            <div class="m-t-80">
+                                <div class="text-dark text-uppercase d-inline-block">
+                                    <span class="font-weight-semibold text-dark">Invoice No :</span>
+                                </div>
+                                <div class="float-right">#@Model.DonHang.OrderId</div>
+                            </div>
+                            <div class="text-dark text-uppercase d-inline-block">
+                                <span class="font-weight-semibold text-dark">Date :</span>
+                            </div>
+                            <div class="float-right">@Model.DonHang.OrderDate</div>
+                        </div>
+                    </div>
+                    <div class="m-t-20">
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>No.</th>
+                                        <th>Items</th>
+                                        <th>Quantity</th>
+                                        <th>Price</th>
+                                        <th>Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @if (Model != null)
+                                    {
+                                        for (int i = 0; i < Model.ChiTietDonHang.Count; i++)
+                                        {
+                                            <tr>
+                                                <td>@(i + 1)</td>
+                                                <td>@Model.ChiTietDonHang[i].Product.ProductName</td>
+                                                <td>@Model.ChiTietDonHang[i].Quantity</td>
+                                                <td>@Model.ChiTietDonHang[i].Price.Value.ToString("#,##0") VNĐ</td>
+                                                <td>@Model.ChiTietDonHang[i].Total.Value.ToString("#,##0") VNĐ</td>
+                                            </tr>
+                                        }
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="row m-t-30 lh-1-8">
+                            <div class="col-sm-12">
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col-md-9">
+                                            <a class="btn btn-block btn-primary col-md-3" href="MyAccount.html"><i class="fas fa-arrow-left" style="margin-right:10px;"></i>Quay lại</a>
+                                        </div>
+                                        <div class="float-right text-right col-md-3">
+                                            <h3><span class="font-weight-semibold text-dark">Total :</span> @Model.DonHang.TotalMoney.Value.ToString("#,##0") VNĐ</h3>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row m-v-20">
+                            <div class="col-sm-6">
+                                <img class="img-fluid text-opacity m-t-5" width="100" src="assets/images/logo/logo.png" alt="">
+                            </div>
+                            <div class="col-sm-6 text-right">
+                                <small><span class="font-weight-semibold text-dark">Phone:</span> (+84) 968-454-617</small>
+                                <br>
+                                <small>support@themenate.com</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

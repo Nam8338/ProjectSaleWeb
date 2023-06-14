@@ -1,0 +1,43 @@
+﻿@model IEnumerable<SmartZone.Models.Product>
+
+@if (Model != null && Model.Count() > 0)
+    {
+        foreach (var item in Model.Take(5))
+        {
+            string url = $"/{item.Alias}-{item.ProductId}.html";
+            string url1 = $"{item.Cate.CategoryName}.html";
+        <div class="product">
+            <div class="product-img" style="height:200px; width:263px;">
+                <img style="height:200px" src="~/images/products/@item.ThumbImg" alt="@item.Title">
+                @if (item.Discount.Value > 0)
+                {
+                    <div class="product-label">
+                        <span class="sale">-@item.Discount.Value%</span>
+                    </div>
+                }
+            </div>
+            <div class="product-body">
+                <a class="product-category" href="@url1">@item.Cate.CategoryName</a>
+                <h3 class="product-name"><a href="@url">@item.ProductName</a></h3>
+                @if (item.Discount.Value > 0)
+                {
+                    <h4 class="product-price">@item.SalesPrice.Value.ToString("#,##0") VNĐ<del class="product-old-price" style="margin-left:5px;">@item.Price.Value.ToString("#,##0") VNĐ</del></h4>
+                }
+                else
+                {
+                    <h4 class="product-price">@item.Price.Value.ToString("#,##0") VNĐ</h4>
+                }
+                <div class="product-rating">
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                </div>
+            </div>
+            <div class="add-to-cart">
+                <button class="add-to-cart-btn" data-mahh="@item.ProductId" data-soluong="1"><i class="fa fa-shopping-cart"></i>Thêm vào giỏ</button>
+            </div>
+        </div>
+    }
+}

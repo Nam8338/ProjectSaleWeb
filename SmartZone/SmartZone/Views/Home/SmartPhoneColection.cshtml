@@ -1,0 +1,130 @@
+﻿@using PagedList.Core.Mvc
+@model PagedList.Core.IPagedList<SmartZone.Models.Product>
+@{
+    int _current = ViewBag.CurrentPage;
+    int _next = _current + 1;
+    ViewData["Title"] = "SmartPhoneColection";
+    Layout = "~/Views/Layout/_StoreLayout.cshtml";
+}
+
+<div class="section">
+    <!-- container -->
+    <div class="container">
+        <!-- row -->
+        <div class="row">
+            <!-- STORE -->
+            <div id="store" class="col-md-12">
+                <!-- store products -->
+                <div class="row">
+                    @if (Model != null && Model.Count() > 0)
+                    {
+                        foreach (var item in Model)
+                        {
+                            string url = $"/{item.Alias}-{item.ProductId}.html";
+                            <!-- product -->
+                            <div class="col-md-4 col-xs-6">
+                                <div class="product">
+                                    <div class="product-img" style="height:300px; width:263px;">
+                                        <img src="~/images/products/@item.ThumbImg" style="height:263px; width:360px;" alt="@item.Title">
+                                        @if (item.Discount.Value > 0)
+                                        {
+                                            <div class="product-label">
+                                                <span class="sale">-@item.Discount.Value%</span>
+                                            </div>
+                                        }
+                                    </div>
+                                    <div class="product-body">
+                                        <p class="product-category">@item.Cate.CategoryName</p>
+                                        <h3 class="product-name"><a href="@url">@item.ProductName</a></h3>
+                                        <h4 class="product-price">@item.SalesPrice.Value.ToString("#,##0") VNĐ<del class="product-old-price" style="margin-left:5px;">@item.Price.Value.ToString("#,##0") VNĐ</del></h4>
+                                        <div class="product-rating">
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                        </div>
+                                        <div class="product-btns">
+                                            <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
+                                            <button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>
+                                            <button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
+                                        </div>
+                                    </div>
+                                    <div class="add-to-cart">
+                                        <input id="txtsoluong" name="txtsoluong" type="hidden" value="1">
+                                        <button class="add-to-cart-btn" data-mahh="@item.ProductId"><i class="fa fa-shopping-cart"></i> Thêm vào giỏ</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- /product -->
+                            <div class="clearfix visible-sm visible-xs"></div>
+                        }
+                    }
+                </div>
+                <!-- /store products -->
+                <!-- store bottom filter -->
+                @*<div class="store-filter clearfix">
+                        <ul class="store-pagination">
+                        </ul>
+                    </div>*@
+                <hr />
+                <pager class="paper-container" list="@Model" asp-area="" asp-controller="Home" asp-action="SmartPhoneColection"></pager>
+                <!-- /store bottom filter -->
+            </div>
+            <!-- /STORE -->
+        </div>
+        <!-- /row -->
+    </div>
+    <!-- /container -->
+</div>
+@section scripts {
+    <script>
+        $(document).ready(function () {
+            $(function () {
+                $(".add-to-cart-btn").click(function () {
+                    var productID = $(this).attr("data-mahh");
+                    var qty1 = $('#txtsoluong').val();
+                    $.ajax({
+                        url: '/api/cart/add',
+                        type: "POST",
+                        dataType: "JSON",
+                        data: {
+                            productId: productID,
+                            qty: qty1
+                        },
+                        success: function (response) {
+                            loadHeaderCart();
+                            location.reload();
+                        },
+                        error: function (error) {
+                            alert("Lỗi khi post data: " + error.responseText);
+                        }
+                    });
+                });
+            });
+
+            $(".delete").click(function () {
+                var productID = $(this).attr("data-mahh");
+                $.ajax({
+                    url: "api/cart/remove",
+                    type: "POST",
+                    dataType: "JSON",
+                    data: {
+                        productId: productID,
+                    },
+                    success: function (result) {
+                        location.reload();
+                    },
+                    error: function (rs) {
+                        alert("Lỗi khi Xóa !!!");
+                    }
+                });
+            });
+
+            function loadHeaderCart() {
+                $("#miniCart").load("/AjaxContent/HeaderCart")
+                $("#miniCart").load("/AjaxContent/NumberCart")
+            }
+        });
+    </script>
+}

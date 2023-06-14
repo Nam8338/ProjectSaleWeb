@@ -1,0 +1,373 @@
+﻿@model SmartZone.Models.Customer
+@{
+    ViewData["Title"] = Model.Username + " Profile Page";
+    Layout = "~/Views/Layout/_ProfileLayout.cshtml";
+    //string url = $"/{Model.CustommerId}.html";
+    List<Order> _lstDonHang = ViewBag._lstOrder;
+}
+
+<div class="container emp-profile">
+    <form method="post">
+        <div class="row">
+            <div class="col-md-3">
+                <div class="profile-img" style="height:135px; width:235px;">
+                    <img src="~/images/User/@Model.Avatar" alt="@Model.FullName" />
+                    @*<div class="file btn btn-lg btn-primary">
+                            Change Photo
+                            <input type="file" name="file" />
+                        </div>*@
+                </div>
+            </div>
+            <div class="col-md-7">
+                <div class="profile-head">
+                    <h5>
+                        @Model.FullName
+                    </h5>
+                    <h6>
+                        @Model.Mail
+                    </h6>
+                    <p class="proile-rating">Tỉnh/Thành Phố : <span>@Model.Province</span></p>
+                    <ul class="nav nav-tabs" id="myTab" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Thông tin</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Địa Chỉ</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="profile-tab" data-toggle="tab" href="#lstOrder" role="tab" aria-controls="profile" aria-selected="false">Danh sách đơn hàng</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-2">
+                @*<a asp-action="Edit" asp-route-id="@Model.CustommerId" class="btn btn-primary btn-block btn-sm profile-edit-btn">
+                        <i class="fas fa-edit" style="margin-right:5px;"></i>Edit Profile
+                    </a>*@
+                <a asp-controller="Accounts" asp-action="Edit" asp-route-id="@Model.CustommerId" class="btn btn-primary btn-block btn-sm profile-edit-btn">
+                    <i class="fas fa-edit" style="margin-right:5px;"></i>Edit Profile
+                </a>
+                <a asp-controller="Accounts" asp-action="ChangePassword" class="btn btn-default btn-block btn-sm profile-edit-btn">
+                    <i class="fas fa-arrow-circle-left" style="margin-right:5px;"></i>Đổi mật khẩu
+                </a>
+                <a asp-controller="Home" asp-action="Index" class="btn btn-default btn-block btn-sm profile-edit-btn">
+                    <i class="fas fa-arrow-circle-left" style="margin-right:5px;"></i>Back to list
+                </a>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3">
+            </div>
+            <div class="col-md-9">
+                <div class="tab-content profile-tab" id="myTabContent">
+                    <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label>Username</label>
+                            </div>
+                            <div class="col-md-6">
+                                <p>@Model.Username</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label>Ngày sinh nhật</label>
+                            </div>
+                            <div class="col-md-6">
+                                <p>@Model.BirthDay</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label>Số điện thoại</label>
+                            </div>
+                            <div class="col-md-6">
+                                <p>@Model.Phone</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label>Tỉnh/Thành phố</label>
+                            </div>
+                            <div class="col-md-6">
+                                <p>@Model.Province</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label>Quận/Huyện</label>
+                            </div>
+                            <div class="col-md-6">
+                                <p>@Model.District</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label>Phường/Xã</label>
+                            </div>
+                            <div class="col-md-6">
+                                <p>@Model.Ward</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label>Địa chỉ</label>
+                            </div>
+                            <div class="col-md-6">
+                                <p>@Model.Address</p>
+                            </div>
+                        </div>
+                    </div>
+                    @if (_lstDonHang != null && _lstDonHang.Count() > 0)
+                    {
+                        <div class="tab-pane fade" id="lstOrder" role="tabpanel" aria-labelledby="profile-tab">
+                            <div class="table-responsive">
+                                <table class="table align-items-center mb-0">
+                                    <thead>
+                                        <tr>
+                                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Mã Đơn Hàng</th>
+                                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                                Ngày mua
+                                            </th>
+                                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                                Trạng thái giao dịch
+                                            </th>
+                                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                                Trạng thái
+                                            </th>
+                                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                                Tổng tiền
+                                            </th>
+                                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                                Đã xóa?
+                                            </th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var item in _lstDonHang)
+                                        {
+                                            string url = $"/chi-tiet-don-hang-{item.OrderId}.html";
+                                            <tr>
+                                                <td>
+                                                    <div class="d-flex px-2">
+                                                        <div class="my-auto">
+                                                            <h6 class="mb-0 text-xs">@item.OrderId</h6>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <p class="text-xs font-weight-normal mb-0">@item.OrderDate</p>
+                                                </td>
+                                                <td>
+                                                    <p class="text-xs font-weight-normal mb-0">@item.TransactionStatus.Descriptions</p>
+                                                </td>
+                                                <td>
+                                                    @if (item.IsPaid == true)
+                                                    {
+
+
+                                                        <span class="badge bg-success">Đã thanh toán</span>
+                                                    }
+                                                    else
+                                                    {
+                                                        <span class="badge bg-secondary">Chưa thanh toán</span>
+                                                    }
+                                                </td>
+                                                <td>
+                                                    <p class="text-xs font-weight-normal mb-0">@item.TotalMoney.Value.ToString("#,##0") VNĐ</p>
+                                                </td>
+                                                <td>
+                                                    @if (item.IsDeleted == true)
+                                                    {
+
+
+                                                        <span class="badge bg-danger">Đã xóa</span>
+                                                    }
+                                                    else
+                                                    {
+                                                        <span class="badge bg-info">Chưa xóa</span>
+                                                    }
+                                                </td>
+                                                <td>
+                                                    <a class="btn btn-secondary btn-primary-hover" href="@url" id="xemdonhang" data-madonhang="@item.OrderId">Xem chi tiết</a>
+                                                    @if (item.IsDeleted == false && item.TransactionStatusId < 3 && item.IsPaid == false)
+                                                    {
+                                                        <a class="btn btn-warning btn-danger-hover" id="huydonhang" data-madonhang="@item.OrderId">Hủy đơn hàng</a>
+                                                    }
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                                <br />
+                                <br />
+                                <br />
+                                <hr />
+                                <div id="record_table">
+
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="tab-pane fade" id="lstOrder" role="tabpanel" aria-labelledby="profile-tab">
+                            <p>Danh sách đơn hàng rỗng</p>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+@section Styles {
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <style>
+        body {
+            background: -webkit-linear-gradient(left, #3931af, #00c6ff);
+        }
+
+        .emp-profile {
+            padding: 3%;
+            margin-top: 3%;
+            margin-bottom: 3%;
+            border-radius: 0.5rem;
+            background: #fff;
+        }
+
+        .profile-img {
+            text-align: center;
+        }
+
+            .profile-img img {
+                max-height: 188px;
+                max-width: 125px;
+                border-radius: 10px;
+            }
+
+            .profile-img .file {
+                position: relative;
+                overflow: hidden;
+                margin-top: -20%;
+                width: 70%;
+                border: none;
+                border-radius: 10px;
+                font-size: 15px;
+                background: #212529b8;
+            }
+
+                .profile-img .file input {
+                    position: absolute;
+                    opacity: 0;
+                    right: 0;
+                    top: 0;
+                }
+
+        .profile-head h5 {
+            color: #333;
+        }
+
+        .profile-head h6 {
+            color: #0062cc;
+        }
+
+        .profile-edit-btn {
+            border: none;
+            border-radius: 1.5rem;
+            width: 70%;
+            padding: 2%;
+            font-weight: 600;
+            color: #6c757d;
+            cursor: pointer;
+        }
+
+        .proile-rating {
+            font-size: 12px;
+            color: #818182;
+            margin-top: 5%;
+        }
+
+            .proile-rating span {
+                color: #495057;
+                font-size: 15px;
+                font-weight: 600;
+            }
+
+        .profile-head .nav-tabs {
+            margin-bottom: 5%;
+        }
+
+            .profile-head .nav-tabs .nav-link {
+                font-weight: 600;
+                border: none;
+            }
+
+                .profile-head .nav-tabs .nav-link.active {
+                    border: none;
+                    border-bottom: 2px solid #0062cc;
+                }
+
+        .profile-work {
+            padding: 14%;
+            margin-top: -15%;
+        }
+
+            .profile-work p {
+                font-size: 12px;
+                color: #818182;
+                font-weight: 600;
+                margin-top: 10%;
+            }
+
+            .profile-work a {
+                text-decoration: none;
+                color: #495057;
+                font-weight: 600;
+                font-size: 14px;
+            }
+
+            .profile-work ul {
+                list-style: none;
+            }
+
+        .profile-tab label {
+            font-weight: 600;
+        }
+
+        .profile-tab p {
+            font-weight: 600;
+            color: #0062cc;
+        }
+    </style>
+}
+
+@section scripts{
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $(function () {
+                $("#huydonhang").click(function () {
+                    var madonhang = $(this).attr("data-madonhang")
+                    $.ajax({
+                        url: 'api/donhang/cancel',
+                        dataType: "JSON",
+                        type: "POST",
+                        data: { id: madonhang },
+                        async: true,
+                        success: function (results) {
+                            location.reload();
+                        },
+                        error: function (xhr) {
+                            alert("Lỗi");
+                        }
+                    });
+                });
+            });
+        });
+    </script>
+}

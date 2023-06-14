@@ -1,0 +1,13 @@
+﻿@model List<SmartZone.ViewModel.CartItem>
+<a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
+    <i class="fa fa-shopping-cart"></i>
+    <span>Giỏ hàng</span>
+    @if (Model != null && Model.Count() > 0)
+    {
+        <div class="qty" id="numberCart">@Model.Count()</div>
+    }
+    else
+    {
+        <div class="qty">0</div>
+    }
+</a>

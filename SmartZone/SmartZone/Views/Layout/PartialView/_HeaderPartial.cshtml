@@ -1,0 +1,80 @@
+﻿<header>
+    <!-- TOP HEADER -->
+    <div id="top-header">
+        <div class="container">
+            <ul class="header-links pull-left">
+                <li><a href="#"><i class="fa fa-phone"></i>+0329182680</a></li>
+                <li><a href="#"><i class="fa fa-envelope-o"></i> nqnam@gmail.com</a></li>
+                <li><a href="#"><i class="fa fa-map-marker"></i> TĐ.HN</a></li>
+            </ul>
+            <ul class="header-links pull-right">
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <li><a href="MyAccount.html"><i class="fa fa-user-o"></i>Xin chào @User.Identity.Name</a></li>
+                    <li><a href="logout"><i class="fas fa-power-off"></i>Đăng xuất</a></li>
+                }
+                else
+                {
+                    <li><a href="register.html"><i class="far fa-registered"></i>Đăng ký</a></li>
+                    <li><a href="login.html"><i class="fas fa-power-off"></i>Đăng nhập</a></li>
+                }
+            </ul>
+        </div>
+    </div>
+    <!-- /TOP HEADER -->
+    <!-- MAIN HEADER -->
+    <div id="header">
+        <!-- container -->
+        <div class="container">
+            <!-- row -->
+            <div class="row">
+                <!-- LOGO -->
+                <div class="col-md-3">
+                    <div class="header-logo">
+                        <a asp-controller="Home" asp-action="Index" class="logo">
+                            <img src="~/_UserAssets/img/logo.png" style="height:80px;" alt="">
+                        </a>
+                    </div>
+                </div>
+                <!-- /LOGO -->
+                <!-- SEARCH BAR -->
+                <div class="col-md-6">
+                    <div class="header-search">
+                        @using (Html.BeginForm("Search", "Products", FormMethod.Post))
+                        {
+                            <form asp-controller="Products" asp-action="Search">
+                                <input class="input" name="searchStr" placeholder="Search here" value="@ViewData["CurrentFilter"]" required />
+                                <button type="submit" class="search-btn">Tìm kiếm</button>
+                            </form>
+                        }
+
+                    </div>
+                </div>
+                <!-- /SEARCH BAR -->
+                <!-- ACCOUNT -->
+                <div class="col-md-3 clearfix">
+                    <div class="header-ctn">
+                        <!-- Cart -->
+                        <div class="dropdown">
+                            @await Component.InvokeAsync("NumberCart")
+                            @await Component.InvokeAsync("HeaderCart")
+                        </div>
+                        <!-- /Cart -->
+                        <!-- Menu Toogle -->
+                        <div class="menu-toggle">
+                            <a href="#">
+                                <i class="fa fa-bars"></i>
+                                <span>Menu</span>
+                            </a>
+                        </div>
+                        <!-- /Menu Toogle -->
+                    </div>
+                </div>
+                <!-- /ACCOUNT -->
+            </div>
+            <!-- row -->
+        </div>
+        <!-- container -->
+    </div>
+    <!-- /MAIN HEADER -->
+</header>

@@ -1,0 +1,127 @@
+﻿@model List<SmartZone.ViewModel.CartItem>
+@{
+    ViewData["Title"] = "Giỏ Hàng";
+    Layout = "~/Views/Layout/_CartLayout.cshtml";
+}
+
+<div class="cart-area section-space-y-axis-100">
+    <div class="container">
+        <div class="row"> <span style="margin-bottom:10px;"><a href="/" style="border-block:solid;"><i class="fas fa-long-arrow-alt-left" style="margin-right: 10px; margin-bottom: 10px;"></i>Quay về trang chủ</a></span> </div>
+        <div class="row">
+            <div class="col-12">
+                <form action="javascript:void(0)">
+                    <div class="table-content table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th class="product_remove">Bỏ sản phẩm</th>
+                                    <th class="product-thumbnail">Ảnh</th>
+                                    <th class="cart-product-name">Sản phẩm</th>
+                                    <th class="product-price">Giá sản phẩm</th>
+                                    <th class="product-quantity">Số lượng</th>
+                                    <th class="product-subtotal">Tổng tiền</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                @if (Model != null && Model.Count() > 0)
+                                {
+                                    foreach (var item in Model)
+                                    {
+                                        <tr>
+                                            <td class="product_remove">
+                                                <input type="button" value="X" title="Remove" class="removecart btn btn-primary" data-mahh="@item.product.ProductId" />
+                                            </td>
+                                            <td class="product-thumbnail">
+                                                <a href="javascript:void(0)">
+                                                    <img src="~/images/products/@item.product.ThumbImg" alt="@item.product.Title" style="height: 124px; width:112px;">
+                                                </a>
+                                            </td>
+                                            <td class="product-name"><a href="javascript:void(0)">@item.product.ProductName</a></td>
+                                            <td class="product-price"><span class="amount">@item.product.SalesPrice.Value.ToString("#,##0") VNĐ</span></td>
+                                            <td class="quantity">
+                                                <div class="cart-plus-minus">
+                                                    <input class="cart-plus-minus-box" value="@item.Qty" type="text" data-mahh="@item.product.ProductId">
+                                                </div>
+                                            </td>
+                                            <td class="product-subtotal"><span class="amount">@item.TotalMoney.Value.ToString("#,##0") VNĐ</span></td>
+                                        </tr>
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-5 ml-auto">
+                            <div class="cart-page-total">
+                                <h2>Tổng cộng</h2>
+                                <ul>
+                                    <li>Total<span>@Model.Sum(x => x.TotalMoney.Value).ToString("#,##0") VNĐ</span></li>
+                                </ul>
+                                @if (User.Identity.IsAuthenticated)
+                                {
+                                    <a href="/checkout.html">Thanh toán <i class="fa fa-arrow-circle-right"></i></a>
+                                }
+                                else
+                                {
+                                    <a href="/login.html?returnUrl=/checkout.html">Thanh toán <i class="fa fa-arrow-circle-right"></i></a>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts {
+    <script>
+        $(function () {
+            function loadHeaderCart() {
+                $("#miniCart").load("/AjaxContent/HeaderCart")
+                $("#miniCart").load("/AjaxContent/NumberCart")
+            }
+
+            $(".cart-plus-minus-box").click(function () {
+                var productID = $(this).attr("data-mahh");
+                console.log(productID);
+                var qty1 = parseInt($(this).val());
+                console.log(productID);
+                $.ajax({
+                    url: "api/cart/update",
+                    type: "POST",
+                    dataType: "JSON",
+                    data: {
+                        productId: productID,
+                        qty: qty1
+                    },
+                    success: function (result) {
+                        window.location = 'cartItem.html';
+                    },
+                    error: function (rs) {
+                        alert("Lỗi cập nhật !!!");
+                    }
+                });
+            });
+
+
+            $(".removecart").click(function () {
+                var productID = $(this).attr("data-mahh");
+                $.ajax({
+                    url: "api/cart/remove",
+                    type: "POST",
+                    dataType: "JSON",
+                    data: {
+                        productId: productID,
+                    },
+                    success: function (result) {
+                        location.reload();
+                    },
+                    error: function (rs) {
+                        alert("Lỗi khi Xóa !!!");
+                    }
+                });
+            });
+        });
+    </script>
+}

@@ -1,0 +1,197 @@
+﻿@model SmartZone.Models.Customer
+
+@{
+    ViewData["Title"] = "Chỉnh sửa Profile";
+    Layout = "~/Views/Layout/_ProfileLayout.cshtml";
+}
+
+<div style="margin-top:3%; margin-left:10%;">
+    <h1>Edit</h1>
+
+    <h4>Customer</h4>
+    <hr />
+    <div class="row">
+        <div class="col-md-9" style="background: #cce6e7">
+            <form asp-action="Edit" method="post" enctype="multipart/form-data">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="CustommerId" />
+                <input type="hidden" asp-for="Username" />
+                <input type="hidden" asp-for="Randomkey" value="@Model.Randomkey" />
+                <input type="hidden" asp-for="Password" />
+                <input type="hidden" asp-for="CreateDate" />
+                <input type="hidden" asp-for="IsActived" />
+                @*<input type="hidden" asp-for="Province" />*@
+                @*<input type="hidden" asp-for="District" />*@
+                @*<input type="hidden" asp-for="Ward" />*@
+                <div class="row">
+                    <div class="form-group col-md-6">
+                        <label asp-for="FullName" class="control-label"></label>
+                        <input asp-for="FullName" class="form-control" />
+                        <span asp-validation-for="FullName" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-md-3">
+                        <label asp-for="Avatar" class="control-label"></label>
+                        <input type="file" name="fAvatar" asp-for="Avatar" class="form-control-file" />
+                        <span asp-validation-for="Avatar" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-9">
+                        <div class="profile-img">
+                            <img src="~/images/User/@Model.Avatar" alt="" id="output" />
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group col-md-6">
+                    <label asp-for="BirthDay" class="control-label"></label>
+                    <input asp-for="BirthDay" class="form-control" />
+                    <span asp-validation-for="BirthDay" class="text-danger"></span>
+                </div>
+                <div class="form-group col-md-6">
+                    <label asp-for="Mail" class="control-label"></label>
+                    <input asp-for="Mail" class="form-control" />
+                    <span asp-validation-for="Mail" class="text-danger"></span>
+                </div>
+                <div class="form-group col-md-6">
+                    <label asp-for="Phone" class="control-label"></label>
+                    <input asp-for="Phone" class="form-control" />
+                    <span asp-validation-for="Phone" class="text-danger"></span>
+                </div>
+                <div class="form-group col-md-7">
+                    <label asp-for="Province" class="control-label">Thành phố</label>
+                    <div class="col-md-10">
+                        <select class="form-control" id="Province" name="Province" onchange="changeFunction();">
+                            <option value="" selected></option>
+                        </select>
+                        <input class="billing_address_1" name="Province" type="hidden" value="">
+                        <span asp-validation-for="Province" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group col-md-7">
+                    <label asp-for="District" class="control-label"></label>
+                    <div class="col-md-10">
+                        <select class="form-control" id="District" name="District" onchange="districtChangeFunction();">
+                            <option value="" selected>Quận Huyện</option>
+                        </select>
+                        <input class="billing_address_2" name="District" type="hidden" value="">
+                        <span asp-validation-for="District" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group col-md-7">
+                    <label asp-for="Ward" class="control-label"></label>
+                    <div class="col-md-10">
+                        <select class="form-control" id="Ward" name="Ward" aria-placeholder="Quận Huyện">
+                            <option value="" selected>Phường xã</option>
+                        </select>
+                        <span asp-validation-for="Ward" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group col-md-6">
+                    <label asp-for="Address" class="control-label"></label>
+                    <input asp-for="Address" class="form-control" />
+                    <span asp-validation-for="Address" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Save" class="btn btn-primary" style="margin-right:10px;" />
+                    <a asp-controller="Accounts" asp-action="MyAccount" class="btn btn-outline-secondary">Back to List</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>
+        $(document).ready(function () {
+            var province = document.getElementById("Province");
+            window.onload = function () {
+                $.ajax({
+                    url: "https://dev-online-gateway.ghn.vn/shiip/public-api/master-data/province",
+                    headers: {
+                        "token": "ec9c3a6c-46a9-11ec-ac64-422c37c6de1b",
+                    },
+                    type: "GET",
+                    dataType: 'json',
+                    success: function (response) {
+                        console.log('success: ' + response.code);
+                        var str = "<option selected>Tỉnh thành</option> ";
+                        for (var i = 0; i < response.data.length; i++) {
+                            console.log(response.data[i].ProvinceName);
+                            str = str + "<option class='provinceId' data-province='" + response.data[i].ProvinceID + "'>" + response.data[i].ProvinceName + "</option>";
+                        }
+                        province.innerHTML = str;
+                    }
+                });
+            };
+        })
+        function changeFunction() {
+            var selectBox = document.getElementById("Province");
+            var selectedValue = selectBox.options[selectBox.selectedIndex].getAttribute('data-province');
+            var district = document.getElementById("District");
+            $.ajax({
+                url: "https://dev-online-gateway.ghn.vn/shiip/public-api/master-data/district",
+                headers: {
+                    'token': 'ec9c3a6c-46a9-11ec-ac64-422c37c6de1b',
+                    'Content-type': 'application/json'
+                },
+                method: 'GET',
+                dataType: 'json',
+                success: function (response) {
+                    var str = "<option selected>Quận Huyện</option>";
+                    for (var i = 0; i < response.data.length; i++) {
+                        if (response.data[i].ProvinceID == selectedValue) {
+                            str = str + "<option class='districtId' data-district='" + response.data[i].DistrictID + "'>" + response.data[i].DistrictName + "</option>";
+                        }
+                    }
+                    district.innerHTML = str;
+                }
+            });
+        };
+        function districtChangeFunction() {
+            var selectBox = document.getElementById("District");
+            var selectedValue = selectBox.options[selectBox.selectedIndex].getAttribute('data-district');
+            var guild = document.getElementById("Ward");
+            $.ajax({
+                url: "https://dev-online-gateway.ghn.vn/shiip/public-api/master-data/ward?district_id=" + selectedValue,
+                headers: {
+                    'token': 'ec9c3a6c-46a9-11ec-ac64-422c37c6de1b',
+                    'Content-type': 'application/json'
+                },
+                method: 'GET',
+                dataType: 'json',
+                success: function (response) {
+                    var str = "<option selected>Phường xã</option>";
+                    console.log(response.data.length);
+                    for (var i = 0; i < response.data.length; i++) {
+                        console.log(response.data[i].WardName);
+                        str = str + "<option class='guildId' data-guild='" + response.data[i].WardCode + "'>" + response.data[i].WardName + "</option>";
+                    }
+                    console.log(str);
+                    guild.innerHTML = str;
+                }
+            });
+        }
+    </script>
+    <script>
+        var loadFile = function (event) {
+            var image = document.getElementById("output");
+            image.src = URL.createObjectURL(event.target.files[0]);
+        };
+    </script>
+}
+@section Styles {
+    <style>
+        .profile-img {
+            text-align: center;
+        }
+
+            .profile-img img {
+                /*width: 100%;
+            height: 100%;*/
+                max-height: 188px;
+                max-width: 125px;
+                border-radius: 10px;
+            }
+    </style>
+}

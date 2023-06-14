@@ -1,0 +1,70 @@
+﻿@model List<Order>
+
+@if (Model != null && Model.Count() > 0)
+{
+    <div class="tab-pane fade" id="lstOrder" role="tabpanel" aria-labelledby="profile-tab">
+        <div class="table-responsive">
+            <table class="table align-items-center mb-0">
+                <thead>
+                    <tr>
+                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Mã Đơn Hàng</th>
+                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                            Ngày mua
+                        </th>
+                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                            Trạng thái giao dịch
+                        </th>
+                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                            Trạng thái
+                        </th>
+                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                            Tổng tiền
+                        </th>
+                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                            Note
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                <div class="d-flex px-2">
+                                    <div class="my-auto">
+                                        <h6 class="mb-0 text-xs">@item.OrderId</h6>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <p class="text-xs font-weight-normal mb-0">@item.OrderDate</p>
+                            </td>
+                            <td>
+                                <p class="text-xs font-weight-normal mb-0">@item.TransactionStatus.Descriptions</p>
+                            </td>
+                            <td>
+                                <p class="text-xs font-weight-normal mb-0">@item.IsPaid</p>
+                            </td>
+                            <td>
+                                <p class="text-xs font-weight-normal mb-0">@item.TotalMoney.Value.ToString("#,##0") VNĐ</p>
+                            </td>
+                            <td>
+                                <p class="text-xs font-weight-normal mb-0">@item.Note</p>
+                            </td>
+                            <td>
+                                <a class="btn btn-secondary btn-primary-hover" asp-controller="DonHang" asp-action="Index" asp-route-id="@item.OrderId" id="xemdonhang" data-madonhang="@item.OrderId">Xem chi tiết</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+}
+else
+{
+    <div class="tab-pane fade" id="lstOrder" role="tabpanel" aria-labelledby="profile-tab">
+        <p>Danh sách đơn hàng rỗng</p>
+    </div>
+}

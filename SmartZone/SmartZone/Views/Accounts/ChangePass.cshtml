@@ -1,0 +1,28 @@
+﻿@model SmartZone.ViewModel.ChangePasswordViewModel
+
+<h4>Change Password</h4>
+<hr />
+<div class="row">
+    <div class="col-md-9" style="background: #cce6e7">
+        <form asp-controller="Accounts" asp-action="ChangePassword" method="post">
+            <div asp-validation-summary="All" class="text-danger"></div>
+            @*<input type="hidden" asp-for="CustommerId" />*@
+            <div class="form-group col-md-6">
+                <label asp-for="CurrentPassword" class="control-label"></label>
+                <input asp-for="CurrentPassword" class="form-control" />
+                <span asp-validation-for="CurrentPassword" class="text-danger"></span>
+            </div>
+            <div class="form-group col-md-6">
+                <label asp-for="Password" class="control-label"></label>
+                <input asp-for="Password" class="form-control" />
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+            <div class="form-group col-md-6">
+                <label asp-for="ConfirmPassword" class="control-label"></label>
+                <input asp-for="ConfirmPassword" class="form-control" />
+                <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+            </div>
+            <button type="submit" class="btn btn-primary">Change</button>
+        </form>
+    </div>
+</div>

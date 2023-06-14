@@ -1,0 +1,294 @@
+﻿@model SmartZone.ViewModel.OrderViewModel
+@{
+    ViewData["Title"] = "Thanh Toán";
+    Layout = "~/Views/Layout/_Layout.cshtml";
+    List<SmartZone.ViewModel.CartItem> carts = ViewBag.GioHang;
+    string action = $"";
+}
+
+<div class="section">
+    <!-- container -->
+    <div class="container">
+        <form asp-controller="Checkout" asp-action="Index" mehtod="post">
+            <input type="hidden" asp-for="CustomerId" />
+            <div class="row">
+                <div class="col-md-7">
+                    <!-- Billing Details -->
+                    <div class="billing-details">
+                        <div class="section-title">
+                            <h3 class="title">Thông tin khách hàng</h3>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="FullName">Họ và tên</label>
+                            <input class="input" type="text" name="first-name" asp-for="FullName" placeholder="Họ tên">
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Email">Email</label>
+                            <input class="input" type="text" name="Mail" asp-for="Email" placeholder="Email">
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Phone">SĐT</label>
+                            <input class="input" type="text" name="phone" asp-for="Phone" placeholder="Số diện thoại">
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Address">Địa chỉ</label>
+                            <input class="input" type="text" name="addr" asp-for="Address" placeholder="Địa chỉ">
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-md-4">
+                                <label asp-for="Province" class="control-label">Thành phố</label>
+                                <div class="col-md-12">
+                                    <select class="form-control" id="Province" name="Province" onchange="changeFunction();">
+                                        <option value="" selected></option>
+                                    </select>
+                                    <input class="billing_address_1" name="Province" type="hidden" value="">
+                                    <span asp-validation-for="Province" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label asp-for="District" class="control-label">Quận Huyện</label>
+                                <div class="col-md-12">
+                                    <select class="form-control" id="District" name="District" onchange="districtChangeFunction();">
+                                        <option value="" selected>Quận Huyện</option>
+                                    </select>
+                                    <input class="billing_address_2" name="District" type="hidden" value="">
+                                    <span asp-validation-for="District" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label asp-for="Ward" class="control-label">Phường Xã</label>
+                                <div class="col-md-12">
+                                    <select class="form-control" id="Ward" name="Ward" aria-placeholder="Quận Huyện">
+                                        <option value="" selected>Phường xã</option>
+                                    </select>
+                                    <span asp-validation-for="Ward" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Address">Địa chỉ</label>
+                            <input class="input" type="text" name="addr" asp-for="Address" placeholder="Ghi chú">
+                        </div>
+                    </div>
+                    <!-- /Billing Details -->
+                    <!-- Order notes -->
+                    <div class="order-notes">
+                        <label asp-for="Note">Note</label>
+                        <textarea class="input" placeholder="Order Notes"></textarea>
+                    </div>
+                    <!-- /Order notes -->
+                </div>
+
+                <!-- Order Details -->
+                @if (carts != null && carts.Count() > 0)
+                {
+                    <div class="col-md-5 order-details">
+                        <div class="section-title text-center">
+                            <h3 class="title">Thông tin đơn hàng</h3>
+                        </div>
+                        <div class="order-summary">
+                            <div class="order-col">
+                                <div><strong>Sản phẩm</strong></div>
+                                <div><strong>Tổng</strong></div>
+                            </div>
+                            <div class="order-products">
+                                @if (carts != null && carts.Count() > 0)
+                                {
+                                    foreach (var item in carts)
+                                    {
+                                        <div class="order-col">
+                                            <div><span>x</span>@item.Qty @item.product.ProductName</div>
+                                            <div>@item.product.SalesPrice.Value.ToString("#,##0") VNĐ</div>
+                                        </div>
+                                    }
+                                }
+                            </div>
+                            <div class="order-col">
+                                <div>Shiping</div>
+                                <div><strong>FREE</strong></div>
+                            </div>
+                            <div class="order-col">
+                                <div><strong>Tổng cộng</strong></div>
+                                <div><strong class="order-total">@carts.Sum(x => x.TotalMoney).Value.ToString("#,##0") VNĐ</strong></div>
+                            </div>
+                        </div>
+                        <div class="payment-method">
+                            <div class="input-radio">
+                                <input type="radio" name="payment" id="payment-1" required="required">
+                                <label for="payment-1">
+                                    <span></span>
+                                    Thanh toán khi nhận hàng
+                                </label>
+                                <div class="caption" style="margin-left:20px;">
+                                    <p style="font-style: italic;">Bạn sẽ phải thanh toán khi nhận hàng</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="input-checkbox">
+                            <input type="checkbox" id="terms" required="required">
+                            <label for="terms">
+                                <span></span>
+                                I've read and accept the <a href="#">terms & conditions</a>
+                            </label>
+                        </div>
+                        <button type="submit" class="primary-btn order-submit">Đặt hàng</button>
+                        <hr />
+                        <div class="payment-method">
+                            <div class="input-radio">
+                                <input type="radio" name="payment" id="payment-2" required="required">
+                                <label for="payment-2">
+                                    <span></span>
+                                    Thanh toán bằng Paypal
+                                </label>
+                                <div class="caption" style="margin-left:20px;">
+                                    <a asp-controller="Checkout" asp-action="PaypalCheckout">
+                                        <img src="~/_AdminAssets/images/PayPalLogo.bmp" />
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <div class="col-md-5 order-details">
+                        <div class="section-title text-center">
+                            <h3 class="title">Thông tin đơn hàng</h3>
+                        </div>
+                        <div class="order-summary">
+                            <div class="order-col">
+                                <div><strong>Sản phẩm</strong></div>
+                                <div><strong>Tổng</strong></div>
+                            </div>
+                            <div class="order-products">
+                                @if (carts != null && carts.Count() > 0)
+                                {
+                                    foreach (var item in carts)
+                                    {
+                                        <div class="order-col">
+                                            <div><span>x</span>@item.Qty @item.product.ProductName</div>
+                                            <div>@item.product.SalesPrice.Value.ToString("#,##0") VNĐ</div>
+                                        </div>
+                                    }
+                                }
+                            </div>
+                            <div class="order-col">
+                                <div>Shiping</div>
+                                <div><strong>FREE</strong></div>
+                            </div>
+                            <div class="order-col">
+                                <div><strong>Tổng cộng</strong></div>
+                                <div><strong class="order-total">@carts.Sum(x => x.TotalMoney).Value.ToString("#,##0") VNĐ</strong></div>
+                            </div>
+                        </div>
+                        <h4 style="color:orange; text-align:center">Đơn hàng rỗng. Không thể đặt hàng</h4>
+                        <div style="visibility:hidden; display:none;" disabled>
+                            <div class="payment-method">
+                                <div class="input-radio">
+                                    <input type="radio" name="payment" id="payment-1" required="required">
+                                    <label for="payment-1">
+                                        <span></span>
+                                        Thanh toán khi nhận hàng
+                                    </label>
+                                    <div class="caption" style="margin-left:20px;">
+                                        <p style="font-style: italic;">Bạn sẽ phải thanh toán khi nhận hàng</p>
+                                    </div>
+                                </div>
+                                <hr />
+                                <a asp-controller="Checkout" asp-action="PaypalCheckout">
+                                    <img src="~/_AdminAssets/images/PayPalLogo.bmp" />
+                                </a>
+                            </div>
+                            <div class="input-checkbox">
+                                <input type="checkbox" id="terms" required="required">
+                                <label for="terms">
+                                    <span></span>
+                                    I've read and accept the <a href="#">terms & conditions</a>
+                                </label>
+                            </div>
+                        </div>
+                        <button type="submit" style="visibility:hidden; display:none;" disabled class="primary-btn order-submit">Đặt hàng</button>
+                    </div>
+                }
+                <!-- /Order Details -->
+            </div>
+            <!-- /row -->
+        </form>
+    </div>
+    <!-- /container -->
+</div>
+
+@section scripts
+{
+    <script>
+        $(document).ready(function () {
+            var province = document.getElementById("Province");
+            window.onload = function () {
+                $.ajax({
+                    url: "https://dev-online-gateway.ghn.vn/shiip/public-api/master-data/province",
+                    headers: {
+                        "token": "ec9c3a6c-46a9-11ec-ac64-422c37c6de1b",
+                    },
+                    type: "GET",
+                    dataType: 'json',
+                    success: function (response) {
+                        console.log('success: ' + response.code);
+                        var str = "<option selected>Tỉnh thành</option> ";
+                        for (var i = 0; i < response.data.length; i++) {
+                            console.log(response.data[i].ProvinceName);
+                            str = str + "<option class='provinceId' data-province='" + response.data[i].ProvinceID + "'>" + response.data[i].ProvinceName + "</option>";
+                        }
+                        province.innerHTML = str;
+                    }
+                });
+            };
+        })
+        function changeFunction() {
+            var selectBox = document.getElementById("Province");
+            var selectedValue = selectBox.options[selectBox.selectedIndex].getAttribute('data-province');
+            var district = document.getElementById("District");
+            $.ajax({
+                url: "https://dev-online-gateway.ghn.vn/shiip/public-api/master-data/district",
+                headers: {
+                    'token': 'ec9c3a6c-46a9-11ec-ac64-422c37c6de1b',
+                    'Content-type': 'application/json'
+                },
+                method: 'GET',
+                dataType: 'json',
+                success: function (response) {
+                    var str = "<option selected>Quận Huyện</option>";
+                    for (var i = 0; i < response.data.length; i++) {
+                        if (response.data[i].ProvinceID == selectedValue) {
+                            str = str + "<option class='districtId' data-district='" + response.data[i].DistrictID + "'>" + response.data[i].DistrictName + "</option>";
+                        }
+                    }
+                    district.innerHTML = str;
+                }
+            });
+        };
+        function districtChangeFunction() {
+            var selectBox = document.getElementById("District");
+            var selectedValue = selectBox.options[selectBox.selectedIndex].getAttribute('data-district');
+            var guild = document.getElementById("Ward");
+            $.ajax({
+                url: "https://dev-online-gateway.ghn.vn/shiip/public-api/master-data/ward?district_id=" + selectedValue,
+                headers: {
+                    'token': 'ec9c3a6c-46a9-11ec-ac64-422c37c6de1b',
+                    'Content-type': 'application/json'
+                },
+                method: 'GET',
+                dataType: 'json',
+                success: function (response) {
+                    var str = "<option selected>Phường xã</option>";
+                    console.log(response.data.length);
+                    for (var i = 0; i < response.data.length; i++) {
+                        console.log(response.data[i].WardName);
+                        str = str + "<option class='guildId' data-guild='" + response.data[i].WardCode + "'>" + response.data[i].WardName + "</option>";
+                    }
+                    console.log(str);
+                    guild.innerHTML = str;
+                }
+            });
+        }
+    </script>
+}

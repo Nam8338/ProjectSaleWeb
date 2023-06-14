@@ -1,0 +1,79 @@
+﻿@model SmartZone.ViewModel.OrderSuccessViewModel
+@{
+    ViewData["Title"] = "Thanh toán thành công";
+    Layout = "~/Views/Layout/_Layout.cshtml";
+}
+
+<div class="main-content">
+    <div class="container" style="border-radius:10px; border:solid crimson;">
+        <div class="align-content-center justify-content-lg-center" style="text-align:center;">
+            <h1 style="color: green;">Thanh toán thành công</h1>
+        </div>
+        <div class="card">
+            <div class="card-body">
+                <div id="invoice" class="p-h-30">
+                    <div class="m-t-15 lh-2">
+                        <div class="inline-block">
+                            <div class="row" style="margin-top:12px;">
+                                <div class="col-md-9">
+                                    <img class="img-fluid" src="~/_AdminAssets/images/logo/logo.png" style="height:100px;width:260px;" alt="">
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="p-l-10">
+                                        <span class="font-weight-semibold text-dark">EShop, Inc.</span><br>
+                                        <span>123456, DIENBIENPHU</span><br>
+                                        <span>BinhThanh, T</span><br>
+                                        <abbr class="text-dark" title="Phone">Phone:</abbr>
+                                        <span>(+84) 968-454-617</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="float-right" style="margin-top:10px;">
+                            <h2>HÓA ĐƠN</h2>
+                        </div>
+                    </div>
+                    <div class="row m-t-20 lh-2">
+                        <div class="col-sm-9">
+                            <h3 class="p-l-10 m-t-10">Đặt Hàng Thành Công</h3>
+                            <address class="p-l-10 m-t-10">
+                                <span class="text-dark" style="font: italic;">Cảm ơn quý khách đã đặt hàng.</span><br>
+                                <hr />
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <span><a style="font-weight: 800; margin-right:10px;">Họ tên khách hàng:</a></span><br>
+                                        <span><a style="font-weight: 800; margin-right: 10px;">Địa chỉ:</a></span><br>
+                                        <span><a style="font-weight: 800; margin-right: 10px;">Số điện thoại:</a></span><br>
+                                        <span><a style="font-weight: 800; margin-right: 10px;">Tỉnh/Thành phố:</a></span><br>
+                                        <span><a style="font-weight: 800; margin-right: 10px;">Quận huyện:</a></span><br>
+                                        <span><a style="font-weight: 800; margin-right: 10px; ">Phường xã:</a></span><br>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <span>@Model.FullName</span><br>
+                                        <span>@Model.Address</span><br>
+                                        <span>@Model.Phone</span><br>
+                                        <span>@Model.TinhThanh</span><br>
+                                        <span>@Model.QuanHuyen</span><br>
+                                        <span>@Model.PhuongXa</span><br>
+                                    </div>
+                                </div>
+                            </address>
+                        </div>
+                        <div class="col-sm-3">
+                            <div class="m-t-80">
+                                <div class="text-dark text-uppercase d-inline-block">
+                                    <span class="font-weight-semibold text-dark">Mã đơn hàng :</span>
+                                </div>
+                                <div class="float-right">#@Model.DonHangID</div>
+                            </div>
+                            <div class="text-dark text-uppercase d-inline-block">
+                                <span class="font-weight-semibold text-dark">Ngày đặt :</span>
+                            </div>
+                            <div class="float-right">@Model.NgayDat</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
