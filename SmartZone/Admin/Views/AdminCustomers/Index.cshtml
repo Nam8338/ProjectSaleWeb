@@ -2,7 +2,7 @@
 @model PagedList.Core.IPagedList<SmartZone.Models.Customer>
 @{
     int _current = ViewBag.CurrentPage; ViewData["Title"] = "Quản lý khách hàng - Trang " + _current;
-    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
 <div class="card" style="border-radius: 1rem; margin-top:10%">
