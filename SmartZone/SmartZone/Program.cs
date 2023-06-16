@@ -1,4 +1,6 @@
 ﻿using AspNetCoreHero.ToastNotification;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 using SmartZone.Models;
 using System.Text.Encodings.Web;
@@ -7,7 +9,7 @@ using System.Text.Unicode;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddControllersWithViews();
+builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation().AddSessionStateTempDataProvider();
 
 // Ket noi den database
 builder.Services.AddDbContext<MyDbContext>(options => options.UseSqlServer(
@@ -24,9 +26,13 @@ builder.Services.AddSession(options =>
 });
 
 builder.Services.AddSingleton<HtmlEncoder>(HtmlEncoder.Create(allowedRanges: new[] { UnicodeRanges.All }));
-builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation().AddSessionStateTempDataProvider();
+
 builder.Services.AddNotyf(config => { config.DurationInSeconds = 5; config.IsDismissable = false; config.Position = NotyfPosition.TopRight; });
-builder.Services.AddAuthentication().AddGoogle(googleOptions =>
+builder.Services.AddAuthentication(opt =>
+{
+    opt.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+    opt.DefaultChallengeScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+}).AddGoogle(googleOptions =>
 {
     // Đọc thông tin Authentication:Google từ appsettings.json
     IConfigurationSection googleAuthNSection = builder.Configuration.GetSection("Authentication:Google");
@@ -37,7 +43,11 @@ builder.Services.AddAuthentication().AddGoogle(googleOptions =>
     // Cấu hình Url callback lại từ Google (không thiết lập thì mặc định là /signin-google)
     googleOptions.CallbackPath = "/dang-nhap-tu-google";
 
-});
+}).AddCookie(p =>
+{
+    p.LoginPath = "/Login.html";
+    p.AccessDeniedPath = "/";
+}); ;
 
 var app = builder.Build();
 

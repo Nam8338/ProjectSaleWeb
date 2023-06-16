@@ -154,8 +154,6 @@ namespace SmartZone.Controllers
 
                 throw;
             }
-            ViewBag.GioHang = carts;
-            return View(order);
         }
         #endregion
 

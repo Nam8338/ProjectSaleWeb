@@ -15,6 +15,7 @@ using System.IO;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace SmartZone.Controllers
 {
@@ -342,11 +343,11 @@ namespace SmartZone.Controllers
         public IActionResult Login(string returnUrl = null)
         {
             var AccID = HttpContext.Session.GetString("CustommerId");
+            var test = User.Identity.IsAuthenticated;
             if (AccID != null)
             {
                 return RedirectToAction("Index", "Home");
             }
-            ViewBag.ReturnURL = returnUrl;
             return View();
         }
 
@@ -391,9 +392,9 @@ namespace SmartZone.Controllers
                             new Claim(ClaimTypes.Name, CTM.FullName),
                             new Claim("CustommerId", CTM.CustommerId.ToString())
                         };
-                    ClaimsIdentity claimsIdentity = new ClaimsIdentity(claims, "Login");
+                    var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
                     ClaimsPrincipal claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
-                    await HttpContext.SignInAsync(claimsPrincipal);
+                    await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, claimsPrincipal);
                     _notyfService.Custom("Đăng nhập thành công!", 5, "#EAB14E", "fas fa-crown");
                     return RedirectToAction("Index", "Home");
                 }
