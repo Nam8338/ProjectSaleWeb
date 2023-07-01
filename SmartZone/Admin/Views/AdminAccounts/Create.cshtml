@@ -1,0 +1,73 @@
+﻿@model SmartZone.Models.Account
+
+@{
+    ViewData["Title"] = "Tạo tài khoản";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<div style="align-items: center; margin-top: 7%; margin-left: 10%;">
+    <div class="col-lg-10" style="background: #AFE3EE; border-radius:50px;">
+        <div class="container h-100">
+            <div class="row no-gutters h-100 align-items-center">
+                <div class="col-md-8 col-lg-7 col-xl-6 mx-auto">
+                    <h1 style="text-align:center">Tạo tài khoản</h1>
+                    <form asp-action="Create">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <div class="form-group">
+                            <label asp-for="Username" class="control-label"></label>
+                            <input asp-for="Username" class="form-control" />
+                            <span asp-validation-for="Username" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Password" class="control-label"></label>
+                            <input asp-for="Password" class="form-control" />
+                            <span asp-validation-for="Password" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Email" class="control-label"></label>
+                            <input asp-for="Email" class="form-control" />
+                            <span asp-validation-for="Email" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="FullName" class="control-label"></label>
+                            <input asp-for="FullName" class="form-control" />
+                            <span asp-validation-for="FullName" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Phone" class="control-label"></label>
+                            <input asp-for="Phone" class="form-control" />
+                            <span asp-validation-for="Phone" class="text-danger"></span>
+                        </div>
+                        @*<div class="form-group">
+                            <label asp-for="CreateDate" class="control-label"></label>
+                            <input asp-for="CreateDate" class="form-control" />
+                            <span asp-validation-for="CreateDate" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="LastLogin" class="control-label"></label>
+                            <input asp-for="LastLogin" class="form-control" />
+                            <span asp-validation-for="LastLogin" class="text-danger"></span>
+                        </div>*@
+                        <div class="form-group">
+                            <label asp-for="RoleId" class="control-label">Vai trò</label>
+                            <select asp-for="RoleId" class="form-control" asp-items="ViewBag.RoleId"></select>
+                        </div>
+                        <div class="row" style="margin-left: 3px; margin-bottom:10px;">
+                            <div class="switch m-r-10">
+                                <input type="checkbox" asp-for="IsActived" checked="" />
+                                <label for="IsActived"></label>
+                            </div>
+                            <label>Trạng thái kích hoạt</label>
+                        </div>
+                        <div class="form-group">
+                            <input type="submit" value="Create" class="btn btn-primary" />
+                            <a asp-action="Index" class="btn btn-dark" style="margin-left:10px;">Trở về</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+

@@ -1,0 +1,158 @@
+﻿@model SmartZone.Models.Product
+
+@{
+    ViewData["Title"] = "Delete";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<div style="margin-top:10%;margin-left:10%;">
+    <h3>M có chắc muốn xóa nó?</h3>
+    <div>
+        <h4>Sản phẩm</h4>
+        <hr />
+        <dl class="row">
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.ProductName)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.ProductName)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.ShortDesc)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.ShortDesc)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Descriptions)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.Raw(Model.Descriptions)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Price)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Price)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.SalesPrice)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.SalesPrice)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Discount)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Discount)%
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.ThumbImg)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.ThumbImg)
+            </dd>
+            @*<dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Video)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Video)
+            </dd>*@
+            <dt class="col-sm-2">
+                Ngày tạo
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.DateCreated)
+            </dd>
+            <dt class="col-sm-2">
+                Ngày cập nhật
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.DateModified)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.IsBestsellers)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.IsBestsellers)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Homeflag)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Homeflag)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.IsActived)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.IsActived)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Tag)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Tag)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Title)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Title)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Alias)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Alias)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.UnitInStock)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.UnitInStock)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Cate)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Cate.CategoryName)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Brand)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Brand.BrandName)
+            </dd>
+        </dl>
+        <form asp-action="Delete">
+            <input type="hidden" asp-for="ProductId" />
+            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModalCenter">
+                Delete
+            </button>
+            <a asp-action="Index" type="button" class="btn btn-dark">Trở về</a>
+        </form>
+    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModalCenter">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalCenterTitle">Xác nhận xóa</h5>
+                    <button type="button" class="close" data-dismiss="modal">
+                        <i class="anticon anticon-close"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Bạn có muốn xóa ???
+                </div>
+                <div class="modal-footer">
+                    <form asp-action="Delete">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <input type="submit" value="Delete" class="btn btn-danger" />
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

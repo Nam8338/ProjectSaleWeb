@@ -1,0 +1,101 @@
+﻿@model SmartZone.Models.Account
+
+@{
+    ViewData["Title"] = "Xóa tài khoản #" +Model.UserId;
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div style="margin-top:10%; margin-left:10%">
+    <h3>M có chắc là m muốn xóa nó hay không?</h3>
+    <div>
+        <h4>Tài khoản</h4>
+        <hr />
+        <dl class="row">
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Username)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Username)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Password)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Password)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Email)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Email)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.FullName)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.FullName)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Phone)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Phone)
+            </dd>
+            <dt class="col-sm-2">
+                Ngày tạo
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.CreateDate)
+            </dd>
+            <dt class="col-sm-2">
+                Lần cuối đăng nhập
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.LastLogin)
+            </dd>
+            <dt class="col-sm-2">
+                Trạng thái
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.IsActived)
+            </dd>
+            <dt class="col-sm-2">
+                Vai trò
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Role.RoleId)
+            </dd>
+        </dl>
+
+        <form asp-action="Delete">
+            <input type="hidden" asp-for="UserId" />
+            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModalCenter">
+                Xóa
+            </button>            
+            <a asp-action="Index" type="button" class="btn btn-dark">Trở về</a>
+        </form>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModalCenter">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalCenterTitle">Xác nhận xóa</h5>
+                    <button type="button" class="close" data-dismiss="modal">
+                        <i class="anticon anticon-close"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Bạn có muốn xóa ???
+                </div>
+                <div class="modal-footer">
+                    <form asp-action="Delete">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Thôi, Để T suy nghĩ thêm</button>
+                        <input type="submit" value="Xóa" class="btn btn-danger" />
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

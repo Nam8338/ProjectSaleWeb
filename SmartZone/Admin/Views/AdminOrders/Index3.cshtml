@@ -1,0 +1,177 @@
+﻿@using PagedList.Core.Mvc
+@model PagedList.Core.IPagedList<SmartZone.Models.Order>
+@addTagHelper *, PagedList.Core.Mvc
+
+@{
+    int _current = ViewBag.CurrentPage;
+    ViewData["Title"] = "Đơn hàng đã thanh toán - Trang "+_current;
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<link href="~/AdminAssets/vendors/datatables/dataTables.bootstrap.min.css" rel="stylesheet">
+<div class="main-content">
+    <div class="page-header">
+        <h2 class="header-title">Product List</h2>
+        <div class="header-sub-title">
+            <nav class="breadcrumb breadcrumb-dash">
+                <a asp-controller="Home" asp-action="Index" class="breadcrumb-item"><i class="anticon anticon-home m-r-5"></i>Home</a>
+                <span class="breadcrumb-item active">Quản lý Đơn Hàng</span>
+            </nav>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-body">
+            <div class="row m-b-30">
+                <div class="col-lg-8">
+                    <form asp-controller="AdminOrders" asp-action="Index">
+                        <p>
+                            <input type="search" name="searchStr" value="@ViewData["CurrentFilter"]" required />
+                            <button type="submit"><i class="fa fa-search"></i></button>
+                        </p>
+                    </form>
+
+                </div>
+
+                <div class="col-lg-4 text-right">
+                    @*<a asp-controller="AdminOrders" asp-action="Create" class="btn btn-primary">
+                        <i class="anticon anticon-plus-circle m-r-5"></i>
+                        <span>Thêm Đơn Hàng</span>
+                    </a>*@
+                </div>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-hover e-commerce-table">
+                    <thead>
+                        <tr>
+                            <th class="text-center align-items-center">
+                                ID
+                            </th>
+                            <th class="text-center align-items-center">
+                                Đơn hàng
+                            </th>
+                            <th class="text-center align-items-center">Mô tả</th>
+                            <th class="text-center align-items-center">
+                                Trạng thái
+                            </th>
+                            <th class="text-center align-items-center">
+                                Ngày mua
+                            </th>
+                            <th class="text-center align-items-center">
+                                Tổng tiền
+                            </th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model != null)
+                        {
+                            foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td class="text-center align-items-center">
+                                        @item.OrderId
+                                    </td>
+                                    <td class="text-center align-items-center">
+                                        @item.Customer.FullName
+                                    </td>
+                                    <td class="text-center align-items-center">
+                                        @item.TransactionStatus.Descriptions
+                                    </td>
+                                    <td class="text-center align-items-center">
+                                        @item.IsPaid
+                                    </td>
+                                    <td class="text-center align-items-center">
+                                        @item.OrderDate
+                                    </td>
+                                    <td class="text-center align-items-center">
+                                        @item.TotalMoney.Value.ToString("#,##0") VNĐ
+                                    </td>
+                                    <td>
+                                        <a asp-controller="AdminOrders" asp-action="Details" asp-route-id="@item.OrderId" class="btn btn-icon btn-hover btn-sm btn-rounded">
+                                            <i class="anticon anticon-eye"></i>
+                                        </a>
+                                        <a asp-controller="AdminOrders" asp-action="Edit" asp-route-id="@item.OrderId" class="btn btn-icon btn-hover btn-sm btn-rounded">
+                                            <i class="anticon anticon-edit"></i>
+                                        </a>
+                                        @*<a asp-controller="AdminOrders" asp-action="Delete" asp-route-id="@item.OrderId" class="btn btn-icon btn-hover btn-sm btn-rounded">
+                                            <i class="anticon anticon-delete"></i>
+                                        </a>*@
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+                <pager class="paper-container" list="@Model" asp-controller="AdminOrders" asp-action="Index3"></pager>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Styles {
+    <style>
+        form {
+            position: relative;
+            transform: translate(5%,5%);
+            transition: all 1s;
+            width: 50px;
+            height: 50px;
+            background: white;
+            box-sizing: border-box;
+            border-radius: 25px;
+            border: 4px solid black;
+            padding: 5px;
+        }
+
+            form input {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 42.5px;
+                line-height: 30px;
+                outline: 0;
+                border: 0;
+                display: none;
+                font-size: 1em;
+                border-radius: 20px;
+                padding: 0 20px;
+                background: #CBF6D2;
+            }
+
+        .fa {
+            box-sizing: border-box;
+            padding: 10px;
+            width: 42.5px;
+            height: 42.5px;
+            position: absolute;
+            top: 0;
+            right: 0;
+            border-radius: 50%;
+            color: #07051a;
+            text-align: center;
+            font-size: 1.2em;
+            transition: all 1s;
+        }
+
+        form:hover,
+        form:valid {
+            width: 200px;
+            cursor: pointer;
+        }
+
+            form:hover input,
+            form:valid input {
+                display: block;
+            }
+
+            form:hover .fa,
+            form:valid .fa {
+                background: #07051a;
+                color: white;
+            }
+
+        button {
+            border: none;
+        }
+    </style>
+}

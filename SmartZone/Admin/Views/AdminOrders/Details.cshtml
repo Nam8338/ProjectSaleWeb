@@ -1,0 +1,126 @@
+﻿@model SmartZone.Models.Order
+
+@{
+    ViewData["Title"] = "Chi Tiết Đơn Hàng #" + Model.OrderId;
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    List<SmartZone.Models.OrderDetail> orderDetails = ViewBag.ChiTiet;
+}
+
+<div class="main-content">
+    <div class="container">
+        <div class="card">
+            <div class="card-body">
+                <div id="invoice" class="p-h-30">
+                    <div class="m-t-15 lh-2">
+                        <div class="inline-block">
+                            <img class="img-fluid" src="~/_AdminAssets/images/logo/logo.png" alt="" style="height:130px;width:260px;">
+                            <address class="p-l-10">
+                                <span class="font-weight-semibold text-dark">EShop, Inc.</span><br>
+                                <span>9498 Harvard Street</span><br>
+                                <span>Fairfield, Chicago Town 06824</span><br>
+                                <abbr class="text-dark" title="Phone">Phone:</abbr>
+                                <span>(+84) 968-454-617</span>
+                            </address>
+                        </div>
+                        <div class="float-right">
+                            <h2>INVOICE</h2>
+                        </div>
+                    </div>
+                    <div class="row m-t-20 lh-2">
+                        <div class="col-sm-9">
+                            <h3 class="p-l-10 m-t-10">Invoice To:</h3>
+                            <address class="p-l-10 m-t-10">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <span><a style="font-weight: 800; margin-right:10px;">Họ tên khách hàng:</a></span><br>
+                                        <span><a style="font-weight: 800; margin-right: 10px;">Địa chỉ:</a></span><br>
+                                        <span><a style="font-weight: 800; margin-right: 10px;">Số điện thoại:</a></span><br>
+                                        <span><a style="font-weight: 800; margin-right: 10px;">Tỉnh/Thành phố:</a></span><br>
+                                        <span><a style="font-weight: 800; margin-right: 10px;">Quận huyện:</a></span><br>
+                                        <span><a style="font-weight: 800; margin-right: 10px; ">Phường xã:</a></span><br>
+                                    </div>
+                                    <div class="col-md-5">
+                                        <span>@Model.Customer.FullName</span><br>
+                                        <span>@Model.Address</span><br>
+                                        <span>@Model.Customer.Phone</span><br>
+                                        <span>@Model.Province</span><br>
+                                        <span>@Model.District</span><br>
+                                        <span>@Model.Ward</span><br>
+                                    </div>
+                                </div>
+                            </address>
+                        </div>
+                        <div class="col-sm-3">
+                            <div class="m-t-80">
+                                <div class="text-dark text-uppercase d-inline-block">
+                                    <span class="font-weight-semibold text-dark">Invoice No :</span>
+                                </div>
+                                <div class="float-right">#@Model.OrderId</div>
+                            </div>
+                            <div class="text-dark text-uppercase d-inline-block">
+                                <span class="font-weight-semibold text-dark">Date :</span>
+                            </div>
+                            <div class="float-right">@Model.OrderDate</div>
+                        </div>
+                    </div>
+                    <div class="m-t-20">
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>No.</th>
+                                        <th>Items</th>
+                                        <th>Quantity</th>
+                                        <th>Price</th>
+                                        <th>Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @if (orderDetails != null && orderDetails.Count() > 0)
+                                    {
+                                        int i = 1;
+                                        foreach (var item in orderDetails)
+                                        {
+                                            <tr>
+                                                <td>@i</td>
+                                                <td>@item.Product.ProductName</td>
+                                                <td>@item.Quantity</td>
+                                                <td>@item.Price.Value.ToString("#,##0") VNĐ</td>
+                                                <td>@item.Total.Value.ToString("#,##0") VNĐ</td>
+                                            </tr>
+                                            i++;
+                                        }
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="row m-t-30 lh-1-8">
+                            <div class="col-sm-12">
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col-md-9">
+                                            <a class="btn btn-block btn-primary col-md-3" asp-area="Admin" asp-controller="AdminOrders" asp-action="Index" ><i class="fas fa-arrow-left" style="margin-right:10px;"></i>Quay lại</a>
+                                        </div>
+                                        <div class="float-right text-right col-md-3">
+                                            <h3><span class="font-weight-semibold text-dark">Total :</span> @Model.TotalMoney.Value.ToString("#,##0") VNĐ</h3>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row m-v-20">
+                            <div class="col-sm-6">
+                                <img class="img-fluid text-opacity m-t-5" width="100" src="assets/images/logo/logo.png" alt="">
+                            </div>
+                            <div class="col-sm-6 text-right">
+                                <small><span class="font-weight-semibold text-dark">Phone:</span> (+84) 968-454-617</small>
+                                <br>
+                                <small>support@themenate.com</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

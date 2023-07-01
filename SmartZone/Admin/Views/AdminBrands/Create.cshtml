@@ -1,0 +1,64 @@
+﻿@model SmartZone.Models.Brand
+
+@{
+    ViewData["Title"] = "Tạo nhãn";
+    Layout = "~Views/Shared/_AdminLayout.cshtml";
+}
+
+
+<div class="main-content">
+    <form asp-controller="AdminBrands" asp-action="Create" method="post" enctype="multipart/form-data">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="page-header no-gutters has-tab">
+            <div class="d-md-flex m-b-15 align-items-center justify-content-between">
+                <div class="media align-items-center m-b-15">
+                    <div class="avatar avatar-image rounded" style="height: 165px; width: 165px">
+                        <img src="~/images/brands/thumb-16.jpg" alt="" id="output" style="border-radius:20px;">
+                    </div>
+                    <div class="m-l-15">
+                        <h4 class="m-b-0">Unknown</h4>
+                        <p class="text-muted m-b-0">ID: #Unknown</p>
+                    </div>
+                </div>
+                <div class="m-b-15">
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="anticon anticon-save"></i>
+                            <span>Tạo</span>
+                        </button>
+                    </div>
+                    <div>
+                        <a asp-action="Index" class="btn btn-dark">Back to List</a>
+                    </div>
+                </div>
+            </div>
+            <ul class="nav nav-tabs">
+                <li class="nav-item">
+                    <a class="nav-link active" data-toggle="tab" href="#product-edit-basic">Thông tin cơ bản</a>
+                </li>
+            </ul>
+        </div>
+        <div class="tab-content m-t-15">
+            <div class="tab-pane fade show active" id="product-edit-basic">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label asp-for="BrandName" class="control-label">Tên nhãn hàng</label>
+                            <input asp-for="BrandName" class="form-control" />
+                            <span asp-validation-for="BrandName" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Logo" class="font-weight-semibold">Upload Ảnh</label>
+                            <input type="file" name="fLogo" asp-for="Logo" class="form-control-file" onchange="loadFile(event)" />
+                            <span asp-validation-for="Logo" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
