@@ -5,13 +5,13 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using SmartZone.Models;
+using Admin.Models;
 using PagedList.Core;
-using SmartZone.Helpper;
+using Admin.Helpper;
 using System.IO;
 using System.Globalization;
 using AspNetCoreHero.ToastNotification.Abstractions;
-using SmartZone.Extension;
+using Admin.Extension;
 using Microsoft.AspNetCore.Authorization;
 
 namespace Admin.Controllers

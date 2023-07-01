@@ -2,7 +2,7 @@
 using EmailServices;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
-using SmartZone.Models;
+using Admin.Models;
 using System.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);

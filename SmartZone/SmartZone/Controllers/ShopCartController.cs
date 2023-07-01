@@ -69,7 +69,7 @@ namespace SmartZone.Controllers
             try
             {
                 Product hh = _context.Products.SingleOrDefault(p => p.ProductId == productId);
-                //m có lưu vào db ddauad mà lấy ra đc ._. uar, vào sessionn mà, xài viewmodel th,
+                
                 CartItem item = GioHang.SingleOrDefault(x => x.product.ProductId == productId);
                 if (carts == null)
                 {
@@ -96,29 +96,6 @@ namespace SmartZone.Controllers
                         carts[index].Qty += qty;
                     }
                 }
-                //if (item != null) // giỏ hàng có đồ
-                //{
-                //    //if (qty.HasValue)
-                //    //{
-                //    //    item.Qty = qty.Value; // số lượng = số lượng nhập vào
-                //    //}
-                //    //else
-                //    //{
-                //    //    item.Qty++; // Số lượng tăng 1
-                //    //}
-                //    item.Qty++;
-                //}
-                //else
-                //{
-                //    Product hh = _context.Products.SingleOrDefault(p => p.ProductId == productId);
-                //    item = new CartItem
-                //    {
-                //        Qty = qty.HasValue ? qty.Value : 1,
-                //        product = hh
-                //    };
-                //    carts.Add(item);
-                //}
-                //có nghĩa là m k update đc? ừ, chỉ nhập đc 1 lần duy nhất, những lần sau thêm ko update đc nữa
 
                 GetSession.Set(HttpContext.Session, "GioHang", carts);
                 //HttpContext.Session.Set<List<CartItem>>("GioHang", carts);

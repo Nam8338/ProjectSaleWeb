@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using SmartZone.Models;
+using Admin.Models;
 using PagedList.Core;
 using EmailServices;
 using Microsoft.AspNetCore.Authorization;

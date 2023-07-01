@@ -1,7 +1,7 @@
 ﻿using AspNetCoreHero.ToastNotification.Abstractions;
-using SmartZone.Extension;
-using SmartZone.Models;
-using SmartZone.ViewModel;
+using Admin.Extension;
+using Admin.Models;
+using Admin.ViewModel;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
