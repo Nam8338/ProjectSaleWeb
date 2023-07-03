@@ -1,0 +1,310 @@
+﻿@using PagedList.Core.Mvc
+@model PagedList.Core.IPagedList<SmartZone.Models.Product>
+
+@{
+    ViewData["Title"] = "Kết quả";
+    Layout = "~/Views/Layout/_StoreLayout.cshtml";
+    int _current = ViewBag.CurrentPage;
+    int _next = _current + 1;
+}
+
+<div class="section">
+    <!-- container -->
+    <div class="container">
+        <!-- row -->
+        <div class="row">
+            <!-- ASIDE -->
+            <!--<div id="aside" class="col-md-3">-->
+            <!-- aside Widget -->
+            <!--<div class="aside">
+                <h3 class="aside-title">Categories</h3>
+                <div class="checkbox-filter">
+
+                    <div class="input-checkbox">
+                        <input type="checkbox" id="category-1">
+                        <label for="category-1">
+                            <span></span>
+                            Laptops
+                            <small>(120)</small>
+                        </label>
+                    </div>
+
+                    <div class="input-checkbox">
+                        <input type="checkbox" id="category-2">
+                        <label for="category-2">
+                            <span></span>
+                            Smartphones
+                            <small>(740)</small>
+                        </label>
+                    </div>
+
+                    <div class="input-checkbox">
+                        <input type="checkbox" id="category-3">
+                        <label for="category-3">
+                            <span></span>
+                            Cameras
+                            <small>(1450)</small>
+                        </label>
+                    </div>
+
+                    <div class="input-checkbox">
+                        <input type="checkbox" id="category-4">
+                        <label for="category-4">
+                            <span></span>
+                            Accessories
+                            <small>(578)</small>
+                        </label>
+                    </div>
+
+                    <div class="input-checkbox">
+                        <input type="checkbox" id="category-5">
+                        <label for="category-5">
+                            <span></span>
+                            Laptops
+                            <small>(120)</small>
+                        </label>
+                    </div>
+
+                    <div class="input-checkbox">
+                        <input type="checkbox" id="category-6">
+                        <label for="category-6">
+                            <span></span>
+                            Smartphones
+                            <small>(740)</small>
+                        </label>
+                    </div>
+                </div>
+            </div>-->
+            <!-- /aside Widget -->
+            <!-- aside Widget -->
+            <!--<div class="aside">
+                <h3 class="aside-title">Price</h3>
+                <div class="price-filter">
+                    <div id="price-slider"></div>
+                    <div class="input-number price-min">
+                        <input id="price-min" type="number">
+                        <span class="qty-up">+</span>
+                        <span class="qty-down">-</span>
+                    </div>
+                    <span>-</span>
+                    <div class="input-number price-max">
+                        <input id="price-max" type="number">
+                        <span class="qty-up">+</span>
+                        <span class="qty-down">-</span>
+                    </div>
+                </div>
+            </div>-->
+            <!-- /aside Widget -->
+            <!-- aside Widget -->
+            <!--<div class="aside">
+                <h3 class="aside-title">Brand</h3>
+                <div class="checkbox-filter">
+                    <div class="input-checkbox">
+                        <input type="checkbox" id="brand-1">
+                        <label for="brand-1">
+                            <span></span>
+                            SAMSUNG
+                            <small>(578)</small>
+                        </label>
+                    </div>
+                    <div class="input-checkbox">
+                        <input type="checkbox" id="brand-2">
+                        <label for="brand-2">
+                            <span></span>
+                            LG
+                            <small>(125)</small>
+                        </label>
+                    </div>
+                    <div class="input-checkbox">
+                        <input type="checkbox" id="brand-3">
+                        <label for="brand-3">
+                            <span></span>
+                            SONY
+                            <small>(755)</small>
+                        </label>
+                    </div>
+                    <div class="input-checkbox">
+                        <input type="checkbox" id="brand-4">
+                        <label for="brand-4">
+                            <span></span>
+                            SAMSUNG
+                            <small>(578)</small>
+                        </label>
+                    </div>
+                    <div class="input-checkbox">
+                        <input type="checkbox" id="brand-5">
+                        <label for="brand-5">
+                            <span></span>
+                            LG
+                            <small>(125)</small>
+                        </label>
+                    </div>
+                    <div class="input-checkbox">
+                        <input type="checkbox" id="brand-6">
+                        <label for="brand-6">
+                            <span></span>
+                            SONY
+                            <small>(755)</small>
+                        </label>
+                    </div>
+                </div>
+            </div>-->
+            <!-- /aside Widget -->
+            <!-- aside Widget -->
+            <!--<div class="aside">
+                <h3 class="aside-title">Top selling</h3>
+                <div class="product-widget">
+                    <div class="product-img">
+                        <img src="./img/product01.png" alt="">
+                    </div>
+                    <div class="product-body">
+                        <p class="product-category">Category</p>
+                        <h3 class="product-name"><a href="#">product name goes here</a></h3>
+                        <h4 class="product-price">$980.00 <del class="product-old-price">$990.00</del></h4>
+                    </div>
+                </div>
+
+                <div class="product-widget">
+                    <div class="product-img">
+                        <img src="./img/product02.png" alt="">
+                    </div>
+                    <div class="product-body">
+                        <p class="product-category">Category</p>
+                        <h3 class="product-name"><a href="#">product name goes here</a></h3>
+                        <h4 class="product-price">$980.00 <del class="product-old-price">$990.00</del></h4>
+                    </div>
+                </div>
+
+                <div class="product-widget">
+                    <div class="product-img">
+                        <img src="./img/product03.png" alt="">
+                    </div>
+                    <div class="product-body">
+                        <p class="product-category">Category</p>
+                        <h3 class="product-name"><a href="#">product name goes here</a></h3>
+                        <h4 class="product-price">$980.00 <del class="product-old-price">$990.00</del></h4>
+                    </div>
+                </div>
+            </div>-->
+            <!-- /aside Widget -->
+            <!--</div>-->
+            <!-- /ASIDE -->
+            <!-- STORE -->
+            <div id="store" class="col-md-12">
+                <!-- store products -->
+                <div class="row">
+                    @if (Model != null && Model.Count() > 0)
+                    {
+                        foreach (var item in Model)
+                        {
+                            string url = $"/{item.Alias}-{item.ProductId}.html";
+                            <!-- product -->
+                            <div class="col-md-3 col-xs-6">
+                                <div class="product">
+                                    <div class="product-img">
+                                        <img src="~/images/products/@item.ThumbImg" style="height:263px; width:263px;" alt="@item.Title">
+                                        @if (item.Discount.Value > 0)
+                                        {
+                                            <div class="product-label">
+                                                <span class="sale">-@item.Discount.Value%</span>
+                                            </div>
+                                        }
+                                    </div>
+                                    <div class="product-body">
+                                        <p class="product-category">@item.Cate.CategoryName</p>
+                                        <h3 class="product-name"><a href="@url">@item.ProductName</a></h3>
+                                        @if (item.Discount.Value > 0)
+                                        {
+                                            <h4 class="product-price">@item.SalesPrice.Value.ToString("#,##0") VNĐ<del class="product-old-price" style="margin-left:5px;">@item.Price.Value.ToString("#,##0") VNĐ</del></h4>
+                                        }
+                                        else
+                                        {
+                                            <h4 class="product-price">@item.Price.Value.ToString("#,##0") VNĐ</h4>
+                                        }
+                                        <div class="product-rating">
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                        </div>
+                                    </div>
+                                    <div class="add-to-cart">
+                                        <input id="txtsoluong" name="txtsoluong" type="hidden" value="1">
+                                        <button class="add-to-cart-btn" data-mahh="@item.ProductId"><i class="fa fa-shopping-cart"></i> Thêm vào giỏ</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- /product -->
+                            <div class="clearfix visible-sm visible-xs"></div>
+                        }
+                    }
+                </div>
+                <!-- /store products -->
+                <!-- store bottom filter -->
+                @*<div class="store-filter clearfix">
+                        <ul class="store-pagination">
+                        </ul>
+                    </div>*@
+                <hr />
+                <pager class="paper-container" list="@Model" asp-area="" asp-controller="Products" asp-action="Index"></pager>
+                <!-- /store bottom filter -->
+            </div>
+            <!-- /STORE -->
+        </div>
+        <!-- /row -->
+    </div>
+    <!-- /container -->
+</div>
+<!-- /SECTION -->
+@section scripts {
+    <script>
+        $(document).ready(function () {
+            $(function () {
+                $(".add-to-cart-btn").click(function () {
+                    var productID = $(this).attr("data-mahh");
+                    var qty1 = $('#txtsoluong').val();
+                    $.ajax({
+                        url: '/api/cart/add',
+                        type: "POST",
+                        dataType: "JSON",
+                        data: {
+                            productId: productID,
+                            qty: qty1
+                        },
+                        success: function (response) {
+                            loadHeaderCart();
+                            location.reload();
+                        },
+                        error: function (error) {
+                            alert("Lỗi khi post data: " + error.responseText);
+                        }
+                    });
+                });
+            });
+
+            $(".delete").click(function () {
+                var productID = $(this).attr("data-mahh");
+                $.ajax({
+                    url: "api/cart/remove",
+                    type: "POST",
+                    dataType: "JSON",
+                    data: {
+                        productId: productID,
+                    },
+                    success: function (result) {
+                        location.reload();
+                    },
+                    error: function (rs) {
+                        alert("Lỗi khi Xóa !!!");
+                    }
+                });
+            });
+
+            function loadHeaderCart() {
+                $("#miniCart").load("/AjaxContent/HeaderCart")
+                $("#miniCart").load("/AjaxContent/NumberCart")
+            }
+        });
+    </script>
+}
